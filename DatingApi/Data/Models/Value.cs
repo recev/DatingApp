@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-namespace Data
+namespace  DatingApi.Data.Models
 {
     public class Value
     {

@@ -1,12 +1,9 @@
-using System.Net;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Data;
 using Microsoft.EntityFrameworkCore;
+using Data;
+using DatingApi.Data.Models;
+using DatingApi.Data.Repositories;
 
 namespace DatingApp.API.Controllers
 {

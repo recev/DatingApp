@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Sqlite;
+using DatingApi.Data.Repositories;
 
 namespace DatingApi
 {
@@ -37,6 +38,7 @@ namespace DatingApi
             // });
 
             services.AddControllers();
+            services.AddScoped<IAuthorization, Authorization>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

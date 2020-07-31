@@ -1,3 +1,4 @@
+using DatingApi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Data
@@ -11,5 +12,7 @@ namespace Data
         }
 
         public DbSet<Value> Values { get; set; }
+
+        public DbSet<User> Users { get; set; }
     }
 }
