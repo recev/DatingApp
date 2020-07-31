@@ -4,8 +4,8 @@ namespace DatingApi.Data.Repositories
 {
     public interface IAuthorization
     {
-        bool Register(string userName, string Password);
-        User Login(string UserName, string Password);
-        bool DoesUserExist(string userName);
+        bool AreCredentialsValid(User user, string password);
+        string GenerateToken(User user);
+        User CreateUser(string userName, string Password);
     }
 }

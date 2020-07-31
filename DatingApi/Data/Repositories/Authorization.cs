@@ -1,68 +1,80 @@
-using System.IO;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using Data;
 using DatingApi.Data.Models;
 using System.Security.Cryptography;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace DatingApi.Data.Repositories
 {
     public class Authorization : IAuthorization
     {
-        DatingDbContext _context;
-        public Authorization(DatingDbContext context)
+        IConfiguration _configuration;
+        public Authorization(IConfiguration configuration)
         {
-            this._context = context;
+            this._configuration = configuration;
         }
 
-        public bool DoesUserExist(string userName)
+        public string GenerateToken(User user)
         {
-            var result = false;
-
+            var token = "";
             try
             {
-                var user = _context.Users.Where(u => u.UserName == userName).FirstOrDefault();
+                var symmetricSecurityKey = GetSymmetricSecurityKey();
+                var signingCredentials = GetSigningCredentials(symmetricSecurityKey);
+                var claimsIdenty = GetClaimsIdentity(user);
+                var tokenDescriptor = GetSecurityTokenDescriptor(signingCredentials, claimsIdenty);
 
-                if(user != null)
-                    result = true;
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                token = tokenHandler.WriteToken(securityToken);
             }
             catch (System.Exception ex)
             {
                 System.Console.WriteLine(ex.Message);
             }
-
-            return result;
-        }
-
-        public User Login(string userName, string password)
-        {
-            var user = FindUser(userName);
-
-            AreCredentialsValid(user, password);
-
-            GenerateToken(user);
-
-            return user;
-        }
-
-        private string GenerateToken(User user)
-        {
-            string token = "";
-
-
             return token;
         }
 
-        private User FindUser(string userName)
+        private SigningCredentials GetSigningCredentials(SymmetricSecurityKey symmetricSecurityKey)
         {
-            var user = _context.Users.FirstOrDefault(u => u.UserName == userName);
-            return user;
+            return new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha512Signature);
         }
 
-        private bool AreCredentialsValid(User user, string password)
+        private SecurityTokenDescriptor GetSecurityTokenDescriptor(SigningCredentials signingCredentials, ClaimsIdentity claimsIdenty)
         {
-            var result = true;
+            return new SecurityTokenDescriptor
+            {
+                Subject = claimsIdenty,
+                Expires = DateTime.Now.Add(new TimeSpan(24, 0, 0)),
+                SigningCredentials = signingCredentials
+            };
+        }
+
+        private ClaimsIdentity GetClaimsIdentity(User user)
+        {
+            return new ClaimsIdentity(
+                            new Claim[]{
+                                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                                new Claim(ClaimTypes.Name, user.UserName)
+                        });
+        }
+
+        private SymmetricSecurityKey GetSymmetricSecurityKey()
+        {
+            var secretKey = _configuration.GetSection("AppSettings:AuthenticationSecretKey").Value;
+            var secretKeyInBytes = System.Text.Encoding.UTF8.GetBytes(secretKey);
+
+            var symmetricSecurityKey = new SymmetricSecurityKey(secretKeyInBytes);
+            return symmetricSecurityKey;
+        }
+
+        public bool AreCredentialsValid(User user, string password)
+        {
+            var result = false;
             try
             {
                 using (var hmac = new HMACSHA512(user.PasswordSaltKey))
@@ -71,7 +83,7 @@ namespace DatingApi.Data.Repositories
 
                     var passwordHash = hmac.ComputeHash(passwordInBytes);
 
-                    if (passwordHash == user.PasswordHash)
+                    if (passwordHash.SequenceEqual(user.PasswordHash))
                         result = true;
                 }   
             }
@@ -83,28 +95,13 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        public bool Register(string userName, string Password)
-        {
-            var result = false;
-
-            var user = CreateUser(userName, Password);
-
-            if(user == null)
-                return result;
-
-            result = SaveUser(user);
-            
-            return result;
-        }
-
-        private User CreateUser(string userName, string Password)
+        public User CreateUser(string userName, string Password)
         {
             User user = null;
             try
             {
                 using (var hcmac = new HMACSHA512())
                 {
-
                     var passwordInBytes = System.Text.Encoding.UTF8.GetBytes(Password);
                     var passwordHash = hcmac.ComputeHash(passwordInBytes);
                     
@@ -121,24 +118,6 @@ namespace DatingApi.Data.Repositories
             }
 
             return user;
-        }
-
-        private bool SaveUser(User user)
-        {
-            var result = false;
-
-            try
-            {
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                result = true;   
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-            }
-
-            return result;
         }
     }
 }
