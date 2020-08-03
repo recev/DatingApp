@@ -59,9 +59,11 @@ namespace DatingApp.API.Controllers
             if(string.IsNullOrEmpty(token))
                 return Unauthorized();
             else
-                return Ok("Token " + token);
+                return Ok(new { Token = token });
         } 
-
+        
+        [AllowAnonymous]
+        [HttpGet("AllUsers")]
         public ActionResult GetUsers()
         {
             return Ok(_userManager.GetAllUsers());
