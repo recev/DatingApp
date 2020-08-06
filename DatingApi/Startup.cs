@@ -17,6 +17,8 @@ using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace DatingApi
 {
@@ -67,6 +69,14 @@ namespace DatingApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler(builder =>
+                {
+                    builder.Run(AddCustomErrorHandler());
+                });
+
+            }
 
             //app.UseHttpsRedirection();
 
@@ -84,6 +94,24 @@ namespace DatingApi
             {
                 endpoints.MapControllers();
             });
+        }
+
+        private RequestDelegate AddCustomErrorHandler()
+        {
+            return async context =>
+            {
+                context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
+
+                var error = context.Features.Get<IExceptionHandlerFeature>();
+                if (error != null)
+                {
+                    context.Response.Headers.Add("Application-Error", error.Error.Message);
+                    context.Response.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
+                    context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                    await context.Response.WriteAsync(error.Error.Message);
+                }
+            };
         }
     }
 }

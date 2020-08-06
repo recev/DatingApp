@@ -62,7 +62,6 @@ namespace DatingApp.API.Controllers
                 return Ok(new { Token = token });
         } 
         
-        [AllowAnonymous]
         [HttpGet("AllUsers")]
         public ActionResult GetUsers()
         {
