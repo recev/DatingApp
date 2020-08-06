@@ -21,9 +21,6 @@ export class HomeComponent implements OnInit {
 
   RegisterationCancelled(isCancelled: boolean)
   {
-    console.log('RegisterationCancelled');
-    console.log(isCancelled);
     this.isRegisterMode = !isCancelled;
   }
-
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,9 @@ export class RegisterComponent implements OnInit {
     IsLoggedIn: false
   };
 
-  constructor(private authService: AuthorizationService) { }
+  constructor(
+    private authService: AuthorizationService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -26,9 +29,9 @@ export class RegisterComponent implements OnInit {
   register(){
     this.authService.register(this.user.UserName, this.user.Password)
     .subscribe(value => {
-      console.log(value);
+      this.toastr.success('User registred successfuly');
     }, error => {
-      console.log(error);
+      this.toastr.error(error);
     });
   }
 

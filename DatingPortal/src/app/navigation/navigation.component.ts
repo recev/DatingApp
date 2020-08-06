@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 import { faUser, faEdit } from '@fortawesome/free-regular-svg-icons';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-navigation',
@@ -12,17 +13,26 @@ export class NavigationComponent implements OnInit {
   faEdit = faEdit;
   user: {
     UserName: string,
-    Password: string,
-    IsLoggedIn: boolean
+    Password: string
   } = {
     UserName: '',
-    Password : '',
-    IsLoggedIn: false
+    Password : ''
   };
 
-  constructor(private authService: AuthorizationService) { }
+  constructor(
+    public authService: AuthorizationService,
+    private toastr: ToastrService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  public isLoggedIn()
+  {
+      return this.authService.isLoggedIn();
+  }
+
+  public loggedInUser()
+  {
+    return this.authService.LoggedInUser();
   }
 
   public login(){
@@ -30,21 +40,14 @@ export class NavigationComponent implements OnInit {
     console.log(this.user);
     this.authService.login(this.user.UserName, this.user.Password)
     .subscribe(v => {
-      this.user.IsLoggedIn = true;
+      this.toastr.success('Logged in successfuly!');
     },
     error => {
-      this.user.IsLoggedIn = false;
-      console.log(error);
+      this.toastr.error(error);
     });
   }
 
   logout(){
-    localStorage.removeItem('Token');
-    this.user.IsLoggedIn = false;
+    this.authService.logout();
   }
-
-  public register(){
-    this.authService.register(this.user.UserName, this.user.Password);
-  }
-
 }
