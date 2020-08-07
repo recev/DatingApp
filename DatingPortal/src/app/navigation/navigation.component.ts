@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 import { faUser, faEdit } from '@fortawesome/free-regular-svg-icons';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation',
@@ -21,7 +22,8 @@ export class NavigationComponent implements OnInit {
 
   constructor(
     public authService: AuthorizationService,
-    private toastr: ToastrService) { }
+    private toastr: ToastrService,
+    private router: Router) { }
 
   ngOnInit(): void {}
 
@@ -41,6 +43,7 @@ export class NavigationComponent implements OnInit {
     this.authService.login(this.user.UserName, this.user.Password)
     .subscribe(v => {
       this.toastr.success('Logged in successfuly!');
+      this.router.navigate(['/members']);
     },
     error => {
       this.toastr.error(error);
@@ -49,5 +52,6 @@ export class NavigationComponent implements OnInit {
 
   logout(){
     this.authService.logout();
+    this.router.navigate(['/home']);
   }
 }

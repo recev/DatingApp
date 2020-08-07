@@ -1,6 +1,6 @@
 <div class="container">
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">Dating App</a>
+  <a class="navbar-brand" [routerLink] = "['home']">Dating App</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,18 +9,21 @@
     <ul class="navbar-nav mr-auto">
       <li
       *ngIf="isLoggedIn()"
-       class="nav-item active">
-        <a class="nav-link" href="#">Matches <span class="sr-only">(current)</span></a>
+      routerLinkActive="active"
+      class="nav-item active">
+        <a class="nav-link" [routerLink]="['/members']">Matches <span class="sr-only">(current)</span></a>
       </li>
       <li
        *ngIf="isLoggedIn()"
+       routerLinkActive="active"
        class="nav-item">
-        <a class="nav-link" href="#">Lists</a>
+        <a class="nav-link" [routerLink]="['/list']">Lists</a>
       </li>
       <li
        *ngIf="isLoggedIn()"
+       routerLinkActive="active"
        class="nav-item">
-        <a class="nav-link" href="#">Messages</a>
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
     </ul>
     <div
@@ -30,7 +33,6 @@
       <a
         dropdownToggle
         class="btn btn-secondary dropdown-toggle"
-        href="#"
         role="button"
         id="dropdownMenuLink"
         data-toggle="dropdown"
@@ -42,9 +44,9 @@
         *dropdownMenu
         class="dropdown-menu"
         aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#"><fa-icon [icon]="faEdit"></fa-icon> Edit Profile</a>
+        <a class="dropdown-item"><fa-icon [icon]="faEdit"></fa-icon> Edit Profile</a>
         <li class="divider dropdown-divider"></li>
-        <a class="dropdown-item" href="#" (click)="logout()"><fa-icon [icon]="faUser"></fa-icon>Logout</a>
+        <a class="dropdown-item" (click)="logout()"><fa-icon [icon]="faUser"></fa-icon>Logout</a>
       </div>
     </div>
     <form

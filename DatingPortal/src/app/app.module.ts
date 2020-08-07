@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -20,6 +21,12 @@ import { RegisterComponent } from './register/register.component';
 // services
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
+import { MembersComponent } from './members/members.component';
+import { ListComponent } from './list/list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { appRoutes } from './routes';
+import { NotFoundComponent } from './not-found/not-found.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -30,7 +37,11 @@ export function tokenGetter() {
     AppComponent,
     HomeComponent,
     NavigationComponent,
-    RegisterComponent
+    RegisterComponent,
+    MembersComponent,
+    ListComponent,
+    MessagesComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,
@@ -40,6 +51,7 @@ export function tokenGetter() {
     NgbModule,
     FontAwesomeModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(appRoutes),
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot(),
     JwtModule.forRoot({
