@@ -7,7 +7,7 @@ namespace DatingApi.Data.DataTransferObjects
         [Required]
         [MinLength(4)]
         [MaxLength(32)]
-        public string UserName { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [MinLength(8)]

@@ -1,5 +1,3 @@
-using System;
-using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,61 +9,28 @@ namespace DatingApp.API.Controllers
     [Authorize]
     public class UsersController: ControllerBase
     {
-        IAuthorization _authorization;
         IUserManager _userManager;
 
-        public UsersController(IAuthorization authorization, IUserManager userManager)
+        public UsersController(IUserManager userManager)
         {
-            this._authorization = authorization;
             this._userManager = userManager;
         }
 
-        [HttpPost("Register")]
-        [AllowAnonymous]
-        public ActionResult Register(RegisterUser registerUser)
+        [HttpGet("{id}")]
+        public ActionResult GetUser(int id)
         {
-            if(_userManager.DoesUserExist(registerUser.UserName))
-                return BadRequest("User already exists");
-
-            var user = _authorization.CreateUser(registerUser.UserName, registerUser.Password);
-
+            var user = _userManager.GetUserDetails(id);
+            
             if(user == null)
-                BadRequest("User Cannot be created!");
-
-            var isUserCreated = _userManager.SaveUser(user);
-
-            if(isUserCreated)
-                return Ok(registerUser);
+                return BadRequest("user not found!");
             else
-                return BadRequest("User can not be registered!");
+                return Ok(user);
         }
 
-        [HttpPost("Login")]
-        [AllowAnonymous]
-        public ActionResult Login(LoginUser loginUser)
+        [HttpGet("UserList")]
+        public ActionResult GetUserList()
         {
-            var user = _userManager.FindUser(loginUser.UserName);
-
-            if(user == null)
-                return Unauthorized();
-
-            var IsValidUser = _authorization.AreCredentialsValid(user, loginUser.Password);
-
-            if(!IsValidUser)
-                return Unauthorized();
-
-            var token = _authorization.GenerateToken(user);
-
-            if(string.IsNullOrEmpty(token))
-                return Unauthorized();
-            else
-                return Ok(new { Token = token });
-        } 
-        
-        [HttpGet("AllUsers")]
-        public ActionResult GetUsers()
-        {
-            return Ok(_userManager.GetAllUsers());
+            return Ok(_userManager.GetUserList());
         }
 
     }

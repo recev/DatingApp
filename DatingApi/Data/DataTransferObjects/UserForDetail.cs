@@ -1,20 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using DatingApi.Data.Models;
 
 namespace DatingApi.Data.DataTransferObjects
 {
-    public class LoginUser
+    public class UserForDetail
     {
-        [Required]
-        [MinLength(4)]
-        [MaxLength(32)]
+        public int Id { get; set; }
         public string Username { get; set; }
-
-        [Required]
-        [MinLength(4)]
-        [MaxLength(32)]
         public string Password { get; set; }
-
         public string Gender { get; set; }
         public string Introduction { get; set; }
         public string LookingFor { get; set; }
@@ -26,5 +21,6 @@ namespace DatingApi.Data.DataTransferObjects
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public string PhotoUrl { get; set; }
+        public ICollection<PhotoForClient> Photos { get; set; }        
     }
 }

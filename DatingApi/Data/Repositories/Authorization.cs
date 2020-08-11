@@ -59,7 +59,7 @@ namespace DatingApi.Data.Repositories
             return new ClaimsIdentity(
                             new Claim[]{
                                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                                new Claim(ClaimTypes.Name, user.UserName)
+                                new Claim(ClaimTypes.Name, user.Username)
                         });
         }
 
@@ -95,7 +95,7 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        public User CreateUser(string userName, string Password)
+        public User CreateUser(string username, string Password)
         {
             User user = null;
             try
@@ -106,7 +106,7 @@ namespace DatingApi.Data.Repositories
                     var passwordHash = hcmac.ComputeHash(passwordInBytes);
                     
                     user = new User {
-                        UserName = userName,
+                        Username = username,
                         PasswordSaltKey = hcmac.Key,
                         PasswordHash = passwordHash
                     };
