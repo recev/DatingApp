@@ -1,0 +1,48 @@
+<p>{{user.knownAs}}</p>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top p-3" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+        <div class="card-body">
+            <h5 class="card-title">Location</h5>
+            <p class="card-text">{{user.city}}, {{user.country}}</p>
+
+            <h5 class="card-title">Age</h5>
+            <p class="card-text">{{user.age}}</p>
+
+            <h5 class="card-title">Last Active</h5>
+            <p class="card-text">{{user.lastActive}}</p>
+
+            <h5 class="card-title">Member Since</h5>
+            <p class="card-text">{{user.created}}</p>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+            <button class="btn btn-primary card-link w-100">Like</button>
+            <button class="btn btn-success card-link w-100">Message</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <tabset>
+        <tab heading="About {{user.username}}">
+          <h4>Description</h4>
+          <p>{{user.introduction}}</p>
+          <h4>Looking for</h4>
+          <p>{{user.lookingFor}}</p>
+        </tab>
+        <tab heading="Interests">
+          {{user.interests}}
+        </tab>
+        <tab heading="Photos">
+          <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+        </tab>
+        <tab heading="Messages">
+
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

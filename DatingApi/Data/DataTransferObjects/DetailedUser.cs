@@ -5,7 +5,7 @@ using DatingApi.Data.Models;
 
 namespace DatingApi.Data.DataTransferObjects
 {
-    public class UserForDetail
+    public class DetailedUser
     {
         public int Id { get; set; }
         public string Username { get; set; }

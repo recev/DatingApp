@@ -6,10 +6,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxGalleryModule } from 'ngx-gallery-9';
 
 // components
 import { AppRoutingModule } from './app-routing.module';
@@ -21,11 +22,14 @@ import { RegisterComponent } from './register/register.component';
 // services
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
-import { MembersComponent } from './members/members.component';
 import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
 import { appRoutes } from './routes';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MemberListComponent } from './member/member-list/member-list.component';
+import { MemberDetailComponent } from './member/member-detail/member-detail.component';
+import { environment } from 'src/environments/environment';
+import { MemberCardComponent } from './member/member-card/member-card.component';
 
 
 export function tokenGetter() {
@@ -38,25 +42,30 @@ export function tokenGetter() {
     HomeComponent,
     NavigationComponent,
     RegisterComponent,
-    MembersComponent,
     ListComponent,
     MessagesComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MemberListComponent,
+    MemberDetailComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    NgbModule,
     FontAwesomeModule,
+    NgxGalleryModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
     ToastrModule.forRoot(),
     JwtModule.forRoot({
       config: {
-        tokenGetter
+        tokenGetter,
+        allowedDomains: environment.allowedDomains,
+        disallowedRoutes: environment.disallowedRoutes
       }
     })
   ],

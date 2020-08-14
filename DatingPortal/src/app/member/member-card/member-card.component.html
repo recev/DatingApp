@@ -1,0 +1,22 @@
+<div class="card m-4" style="width: 18rem;">
+  <div class="card-img-wrapper">
+    <img class="card-img-top rounded" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+    <ul class="list-group list-group-horizontal justify-content-center member-icons">
+      <li
+        [routerLink]="['/members', user.id]"
+        class="list-group-item text-center d-inline-block">
+          <button class="btn btn-primary"><fa-icon [icon]="faUser"></fa-icon></button>
+      </li>
+      <li class="list-group-item text-center d-inline-block">
+        <button class="btn btn-primary"><fa-icon [icon]="faHeart"></fa-icon></button>
+      </li>
+      <li class="list-group-item text-center d-inline-block">
+        <button class="btn btn-primary"><fa-icon [icon]="faEnvelope"></fa-icon></button>
+      </li>
+    </ul>
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><fa-icon [icon]="faUser"></fa-icon>{{user.knownAs}}, {{user.age}}</h5>
+    <p class="card-text">{{user.city}}</p>
+  </div>
+</div>

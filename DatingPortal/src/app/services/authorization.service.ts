@@ -22,7 +22,7 @@ export class AuthorizationService {
   }
 
   login(userName: string, password: string) {
-    const loginUrl = environment.baseUrl + 'users/login';
+    const loginUrl = environment.baseUrl + 'account/login';
     const user = {
       UserName: userName,
       Password: password
@@ -46,17 +46,12 @@ export class AuthorizationService {
   }
 
   register(userName: string, password: string) {
-    const registerUrl = environment.baseUrl + 'users/register';
+    const registerUrl = environment.baseUrl + 'account/register';
     const user = {
       UserName: userName,
       Password: password
     };
 
     return this.httpClient.post(registerUrl, user);
-  }
-
-  getAllUsers() {
-    const url = environment.baseUrl + 'users/AllUsers';
-    return this.httpClient.get(url);
   }
 }

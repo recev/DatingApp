@@ -10,7 +10,7 @@ namespace DatingApi.Data
     {
         public AutoMapProfile()
         {
-            CreateMap<User, UserForList>()
+            CreateMap<User, CompactUser>()
                 .ForMember(destination => destination.Age, 
                     configuration => configuration.MapFrom(user => GetAge(user.DateOfBirth))
                 )
@@ -24,7 +24,7 @@ namespace DatingApi.Data
                 );
 
 
-            CreateMap<User, UserForDetail>()
+            CreateMap<User, DetailedUser>()
                 .ForMember(destination => destination.Age, 
                     configuration => configuration.MapFrom(user => GetAge(user.DateOfBirth))
                 )

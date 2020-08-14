@@ -4,6 +4,8 @@
 
 export const environment = {
   baseUrl: 'http://localhost:5000/api/',
+  allowedDomains: ['localhost:5000'],
+  disallowedRoutes: ['http://localhost:5000/api/account/register', 'http://localhost:5000/api/account/login'],
   production: false
 };
 

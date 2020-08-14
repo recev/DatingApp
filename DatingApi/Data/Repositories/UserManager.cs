@@ -20,9 +20,9 @@ namespace DatingApi.Data.Repositories
             this._mapper = mapper;
         }
 
-        public UserForDetail GetUserDetails(int id)
+        public DetailedUser GetUserDetails(int id)
         {
-            UserForDetail user = null;
+            DetailedUser user = null;
 
             try
             {
@@ -30,7 +30,7 @@ namespace DatingApi.Data.Repositories
                     .Include(user => user.Photos)
                     .FirstOrDefault(user => user.Id == id);
                     
-                user = _mapper.Map<UserForDetail>(dbUser);
+                user = _mapper.Map<DetailedUser>(dbUser);
             }
             catch (System.Exception ex)
             {
@@ -40,14 +40,14 @@ namespace DatingApi.Data.Repositories
             return user;
         }
         
-        public IList<UserForList> GetUserList()
+        public IList<CompactUser> GetUserList()
         {
-            IList<UserForList> users = null;
+            IList<CompactUser> users = null;
 
             try
             {
                 var dbUsers = _context.Users.Include(user => user.Photos).ToList();
-                users = _mapper.Map<IList<UserForList>>(dbUsers);
+                users = _mapper.Map<IList<CompactUser>>(dbUsers);
             }
             catch (System.Exception ex)
             {

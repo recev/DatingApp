@@ -2,7 +2,7 @@ using System;
 
 namespace DatingApi.Data.DataTransferObjects
 {
-    public class UserForList
+    public class CompactUser
     {
         public int Id { get; set; }
         public string Username { get; set; }
