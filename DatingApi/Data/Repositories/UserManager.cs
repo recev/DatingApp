@@ -131,6 +131,30 @@ namespace DatingApi.Data.Repositories
 
             return result;
         }
-    
+
+        public bool UpdateUser(UpdateUser updateUser)
+        {
+            bool result = false;
+
+            try
+            {
+                var dbUser = FindUser(updateUser.Username);
+
+                if(dbUser == null)
+                    return result;
+
+                var user = _mapper.Map(updateUser, dbUser);
+
+                _context.SaveChanges();
+                
+                result = true;
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+
+            return result;
+        }
     }
 }

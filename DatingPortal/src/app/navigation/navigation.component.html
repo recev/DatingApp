@@ -43,7 +43,12 @@
         *dropdownMenu
         class="dropdown-menu"
         aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item"><fa-icon [icon]="faEdit"></fa-icon> Edit Profile</a>
+        <a
+          class="dropdown-item"
+          [routerLink]="['/member-edit']">
+            <fa-icon [icon]="faEdit"></fa-icon>
+            Edit Profile
+        </a>
         <li class="divider dropdown-divider"></li>
         <a class="dropdown-item" (click)="logout()"><fa-icon [icon]="faUser"></fa-icon>Logout</a>
       </div>

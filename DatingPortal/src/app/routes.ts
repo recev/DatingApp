@@ -6,6 +6,8 @@ import { MemberListComponent } from './member/member-list/member-list.component'
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { AuthorizationGuard } from './guards/authorization.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 
 export let appRoutes: Routes = [
   { path : '', component : NotFoundComponent},
@@ -17,6 +19,7 @@ export let appRoutes: Routes = [
     children: [
       { path : 'members', component: MemberListComponent},
       { path : 'members/:id', component: MemberDetailComponent },
+      { path : 'member-edit', component: MemberEditComponent, canDeactivate: [UnsavedChangesGuard]},
       { path : 'messages', component: MessagesComponent},
       { path : 'list', component : ListComponent},
       { path : '**', component : NotFoundComponent}

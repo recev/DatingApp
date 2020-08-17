@@ -12,10 +12,10 @@
             <p class="card-text">{{user.age}}</p>
 
             <h5 class="card-title">Last Active</h5>
-            <p class="card-text">{{user.lastActive}}</p>
+            <p class="card-text">{{user.lastActive | date : 'yyyy.MM.dd HH:mm'}}</p>
 
             <h5 class="card-title">Member Since</h5>
-            <p class="card-text">{{user.created}}</p>
+            <p class="card-text">{{user.created | date: 'yyyy.MM.dd'}}</p>
         </div>
         <div class="card-footer">
           <div class="btn-group d-flex">

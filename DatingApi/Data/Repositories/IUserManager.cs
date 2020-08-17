@@ -12,5 +12,6 @@ namespace DatingApi.Data.Repositories
         User FindUser(string userName);
         bool SaveUser(User user);
         bool DeleteUser(string userName);
+        bool UpdateUser(UpdateUser updateUser);
     }
 }

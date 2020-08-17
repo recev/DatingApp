@@ -1,3 +1,6 @@
+using System.Security.Claims;
+using System.Linq;
+using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +13,16 @@ namespace DatingApp.API.Controllers
     public class UsersController: ControllerBase
     {
         IUserManager _userManager;
+
+        public int CurrentUserId {
+            get {
+                var NameIdentifierClaim = User.Claims
+                    .Where(c => c.Type == ClaimTypes.NameIdentifier)
+                    .FirstOrDefault();
+                    
+                return int.Parse(NameIdentifierClaim.Value);
+            }
+        }
 
         public UsersController(IUserManager userManager)
         {
@@ -25,6 +38,20 @@ namespace DatingApp.API.Controllers
                 return BadRequest("user not found!");
             else
                 return Ok(user);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateUser(UpdateUser updateUser)
+        {
+            if(CurrentUserId != updateUser.Id)
+                return Unauthorized();
+
+            var result = _userManager.UpdateUser(updateUser);
+
+            if(result)
+                return Ok(updateUser);
+            else
+                return BadRequest("User can not be updated!");
         }
 
         [HttpGet("UserList")]

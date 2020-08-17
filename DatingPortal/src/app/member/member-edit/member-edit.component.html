@@ -1,0 +1,95 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <p>Your profile</p>
+    </div>
+    <div class="col-sm-6">
+      <div class="alert alert-primary" role="alert" *ngIf="userForm.dirty">
+        <strong>Information</strong><p>You have made changes. Unsaved changes will be lost!</p>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+        <img class="card-img-top p-3" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+        <div class="card-body">
+            <h5 class="card-title">Location</h5>
+            <p class="card-text">{{user.city}}, {{user.country}}</p>
+
+            <h5 class="card-title">Age</h5>
+            <p class="card-text">{{user.age}}</p>
+
+            <h5 class="card-title">Last Active</h5>
+            <p class="card-text">{{user.lastActive | date : 'yyyy.MM.dd HH:mm'}}</p>
+
+            <h5 class="card-title">Member Since</h5>
+            <p class="card-text">{{user.created | date: 'yyyy.MM.dd'}}</p>
+        </div>
+        <div class="card-footer">
+            <button
+              class="btn btn-primary card-link w-100"
+              form="userForm"
+              (click) ="saveChanges()"
+              [disabled]="!userForm.dirty"
+              >Save Changes</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <tabset>
+        <tab heading="Edit Profile">
+          <form (ngSubmit)="saveChanges()" #userForm="ngForm">
+            <div class="form-group">
+              <label for="introduction">Introduction</label>
+              <textarea
+                name="introduction"
+                class="form-control"
+                [(ngModel)]="user.introduction"
+                rows="6"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="lookingFor">Looking For</label>
+              <textarea
+                name="lookingFor"
+                class="form-control"
+                [(ngModel)]="user.lookingFor"
+                rows="6"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="interests">Interests</label>
+              <textarea
+                name="interests"
+                class="form-control"
+                [(ngModel)]="user.interests"
+                rows="6"></textarea>
+            </div>
+            <div class="form-group">
+              <label for="city">City</label>
+              <input
+                type="text"
+                class="form-control"
+                name="city"
+                [(ngModel)]="user.city"
+                id="city"
+                placeholder="City">
+            </div>
+            <div class="form-group">
+              <label for="country">Country</label>
+              <input
+                type="text"
+                class="form-control"
+                name="country"
+                [(ngModel)]="user.country"
+                id="country"
+                placeholder="Country">
+            </div>
+          </form>
+        </tab>
+        <tab heading="Interests">
+          {{user.interests}}
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

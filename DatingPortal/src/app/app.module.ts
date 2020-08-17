@@ -30,6 +30,7 @@ import { MemberListComponent } from './member/member-list/member-list.component'
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { environment } from 'src/environments/environment';
 import { MemberCardComponent } from './member/member-card/member-card.component';
+import { MemberEditComponent } from './member/member-edit/member-edit.component';
 
 
 export function tokenGetter() {
@@ -47,7 +48,8 @@ export function tokenGetter() {
     NotFoundComponent,
     MemberListComponent,
     MemberDetailComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberEditComponent
   ],
   imports: [
     BrowserModule,

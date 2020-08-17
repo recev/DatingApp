@@ -38,6 +38,9 @@ namespace DatingApi.Data
                 );
 
             CreateMap<Photo, PhotoForClient>();
+
+            CreateMap<UpdateUser, User>();
+
         }
 
         private int GetAge(DateTime dateOfBirth)

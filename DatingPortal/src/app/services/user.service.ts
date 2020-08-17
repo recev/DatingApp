@@ -18,7 +18,11 @@ export class UserService {
 
   getUser(id: string)
   {
-    console.log(id);
     return this.httpClient.get<DetailedUser>(environment.baseUrl + 'users/' + id);
+  }
+
+  updateUser(updateUser: DetailedUser)
+  {
+    return this.httpClient.put(environment.baseUrl + 'users/' + updateUser.id, updateUser);
   }
 }

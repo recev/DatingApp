@@ -16,6 +16,12 @@ export class AuthorizationService {
     return !this.jwtHelper.isTokenExpired();
   }
 
+  loggedInUserId()
+  {
+    const token = this.jwtHelper.decodeToken();
+    return token.nameid;
+  }
+
   public LoggedInUser() {
     const token = this.jwtHelper.decodeToken();
     return token.unique_name;
