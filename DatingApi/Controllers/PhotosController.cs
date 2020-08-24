@@ -50,12 +50,12 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadPhoto(UploadPhoto image)
+        public IActionResult UploadPhoto(UploadPhoto uploadPhoto)
         {
-            if(CurrentUserId != image.UserId)
+            if(CurrentUserId != uploadPhoto.UserId)
                 return Unauthorized();
 
-            var result = _photoRepository.UploadPhoto(image);
+            var result = _photoRepository.UploadPhoto(uploadPhoto);
 
             if(result.IsSuccessful)
                 return CreatedAtRoute("GetPhoto", new {userId = CurrentUserId, photoId=result.Photo.Id }, result.Photo);

@@ -58,22 +58,22 @@ namespace DatingApi.Data.Repositories
             return photo;
         }
 
-        public UploadPhotoResult UploadPhoto(UploadPhoto image)
+        public UploadPhotoResult UploadPhoto(UploadPhoto uploadPhoto)
         {
             var result = new UploadPhotoResult();
-            var uploadResult = UploadImageToCloudinary(image);
+            var uploadResult = UploadImageToCloudinary(uploadPhoto);
 
             if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                result.Message = "Image Can not be uploaded to Cloudinary!";
+                result.Message = "Photo Can not be uploaded to Cloudinary!";
                 return result;
             }
 
-            var isMainPhoto = IsMainPhoto(image);
+            var isMainPhoto = IsMainPhoto(uploadPhoto);
 
             var newPhoto = new Photo()
             {
-                UserId = image.UserId,
+                UserId = uploadPhoto.UserId,
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.SecureUrl.ToString(),
                 IsMain = isMainPhoto,
