@@ -23,6 +23,8 @@ using Data;
 
 using DatingApi.Data.Repositories;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
+using DatingApi.Settings;
 
 namespace DatingApi
 {
@@ -50,10 +52,14 @@ namespace DatingApi
             services.AddControllers().AddNewtonsoftJson(setup => { setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;});
             services.AddScoped<IAuthorization, Authorization>();
             services.AddScoped<IUserManager, UserManager>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
+            services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));
+            
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options => {
                 
-                        var securityKey = Configuration.GetSection("AppSettings:AuthenticationSecretKey").Value;
+                        var securityKey = Configuration.GetSection("AuthenticationSettings:SecretKey").Value;
                         var securityKeyInBytes = System.Text.Encoding.UTF8.GetBytes(securityKey);
                         var IssuerSigningKey = new SymmetricSecurityKey(securityKeyInBytes);
                         

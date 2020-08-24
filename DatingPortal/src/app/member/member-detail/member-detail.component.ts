@@ -20,7 +20,9 @@ export class MemberDetailComponent implements OnInit {
             imagePercent: 100,
             thumbnailsColumns: 4,
             imageAnimation: NgxGalleryAnimation.Slide,
-            preview: false
+            preview: false,
+            imageArrows: true,
+            thumbnailsArrows: true
         }
     ];
 
@@ -35,13 +37,15 @@ export class MemberDetailComponent implements OnInit {
 
         this.user = user;
 
-        const image = new NgxGalleryImage({
-          small: this.user.photoUrl,
-          medium: this.user.photoUrl,
-          big: this.user.photoUrl
-        });
+        user.photos.forEach(photo => {
+          const image = new NgxGalleryImage({
+            small: photo.url,
+            medium: photo.url,
+            big: photo.url
+          });
 
-        this.galleryImages.push(image);
+          this.galleryImages.push(image);
+        });
       });
   }
 }

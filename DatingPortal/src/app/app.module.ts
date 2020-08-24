@@ -11,6 +11,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from 'ngx-gallery-9';
+import { JwtModule } from '@auth0/angular-jwt';
+import { FileUploadModule } from 'ng2-file-upload';
 
 // components
 import { AppRoutingModule } from './app-routing.module';
@@ -18,20 +20,19 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { RegisterComponent } from './register/register.component';
-
-// services
-import { ErrorInterceptorProvider } from './services/error.interceptor';
-import { JwtModule } from '@auth0/angular-jwt';
 import { ListComponent } from './list/list.component';
 import { MessagesComponent } from './messages/messages.component';
-import { appRoutes } from './routes';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MemberListComponent } from './member/member-list/member-list.component';
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
-import { environment } from 'src/environments/environment';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 
+// services
+import { ErrorInterceptorProvider } from './services/error.interceptor';
+import { appRoutes } from './routes';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -49,7 +50,8 @@ export function tokenGetter() {
     MemberListComponent,
     MemberDetailComponent,
     MemberCardComponent,
-    MemberEditComponent
+    MemberEditComponent,
+    PhotoEditorComponent
   ],
   imports: [
     BrowserModule,
@@ -58,6 +60,7 @@ export function tokenGetter() {
     FormsModule,
     FontAwesomeModule,
     NgxGalleryModule,
+    FileUploadModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     BsDropdownModule.forRoot(),

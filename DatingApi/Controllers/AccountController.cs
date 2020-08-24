@@ -54,9 +54,14 @@ namespace DatingApi.Controllers
             var token = _authorization.GenerateToken(user);
 
             if(string.IsNullOrEmpty(token))
+            {
                 return Unauthorized();
+            }
             else
-                return Ok(new { Token = token });
+            {
+                var userDetails = this._userManager.GetUserDetails(user.Id);
+                return Ok(new { Token = token, User = userDetails });
+            }
         } 
     }
 }

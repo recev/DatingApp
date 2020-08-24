@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { DetailedUser } from 'src/app/models/detailed-user';
 import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UserService } from 'src/app/services/user.service';
-import { error } from 'protractor';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
+import { Photo } from 'src/app/models/photo';
 
 @Component({
   selector: 'app-member-edit',
@@ -13,9 +13,10 @@ import { NgForm } from '@angular/forms';
 })
 export class MemberEditComponent implements OnInit {
   user: DetailedUser = new DetailedUser();
+  photoUrl = '';
   @ViewChild('userForm') userForm: NgForm;
   @HostListener('window:beforeunload', ['$event'])
-  WindowBeforeUnoad($event: any){
+  WindowBeforeUnload($event: any){
 
     if ( this.userForm.dirty)
     {
@@ -30,6 +31,7 @@ export class MemberEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.getUser();
+    this.authService.photoUrl.subscribe(p => this.photoUrl = p);
   }
 
 

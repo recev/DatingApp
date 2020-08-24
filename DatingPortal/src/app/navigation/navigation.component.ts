@@ -3,6 +3,7 @@ import { AuthorizationService } from '../services/authorization.service';
 import { faUser, faEdit } from '@fortawesome/free-regular-svg-icons';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { DetailedUser } from '../models/detailed-user';
 
 @Component({
   selector: 'app-navigation',
@@ -12,20 +13,17 @@ import { Router } from '@angular/router';
 export class NavigationComponent implements OnInit {
   faUser = faUser;
   faEdit = faEdit;
-  user: {
-    UserName: string,
-    Password: string
-  } = {
-    UserName: '',
-    Password : ''
-  };
+  user: DetailedUser = new DetailedUser();
+  photoUrl = '';
 
   constructor(
     public authService: AuthorizationService,
     private toastr: ToastrService,
     private router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authService.photoUrl.subscribe(photoUrl => this.photoUrl = photoUrl);
+  }
 
   public isLoggedIn()
   {
@@ -34,16 +32,17 @@ export class NavigationComponent implements OnInit {
 
   public loggedInUser()
   {
-    return this.authService.LoggedInUser();
+    return this.authService.getUser().username;
   }
 
   public login(){
 
     console.log(this.user);
-    this.authService.login(this.user.UserName, this.user.Password)
+    this.authService.login(this.user.username, this.user.password)
     .subscribe(v => {
       this.toastr.success('Logged in successfuly!');
       this.router.navigate(['/members']);
+      this.user = this.authService.getUser();
     },
     error => {
       this.toastr.error(error);

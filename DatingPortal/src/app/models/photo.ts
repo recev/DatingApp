@@ -5,4 +5,6 @@ export class Photo
     description: string;
     addedDate: Date;
     isMain: boolean;
+    publicId: string;
+    userId: number;
 }

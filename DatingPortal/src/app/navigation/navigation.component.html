@@ -29,6 +29,7 @@
       *ngIf="isLoggedIn()"
       dropdown
       class="nav-item dropdown show">
+      <img src="{{photoUrl}}" class="img-profile" alt="Profile Image">
       <a
         dropdownToggle
         class="btn btn-secondary dropdown-toggle"
@@ -59,7 +60,7 @@
       (ngSubmit) ="login()"
       class="form-inline my-2 my-lg-0">
       <input
-        [(ngModel)]="user.UserName"
+        [(ngModel)]="user.username"
         name="UserName"
         class="form-control mr-sm-2"
         type="text"
@@ -67,7 +68,7 @@
         placeholder="User name"
         aria-label="User Name">
       <input
-        [(ngModel)]="user.Password"
+        [(ngModel)]="user.password"
         name="Password"
         class="form-control mr-sm-2"
         type="text"

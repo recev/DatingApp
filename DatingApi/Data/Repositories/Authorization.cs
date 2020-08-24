@@ -1,21 +1,21 @@
 using System;
 using System.Linq;
-using Data;
 using DatingApi.Data.Models;
 using System.Security.Cryptography;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
+using DatingApi.Settings;
+using Microsoft.Extensions.Options;
 
 namespace DatingApi.Data.Repositories
 {
     public class Authorization : IAuthorization
     {
-        IConfiguration _configuration;
-        public Authorization(IConfiguration configuration)
+        AuthenticationSettings _authenticationSettings;
+        public Authorization(IOptions<AuthenticationSettings> authenticationSettings)
         {
-            this._configuration = configuration;
+            this._authenticationSettings = authenticationSettings.Value;
         }
 
         public string GenerateToken(User user)
@@ -65,8 +65,7 @@ namespace DatingApi.Data.Repositories
 
         private SymmetricSecurityKey GetSymmetricSecurityKey()
         {
-            var secretKey = _configuration.GetSection("AppSettings:AuthenticationSecretKey").Value;
-            var secretKeyInBytes = System.Text.Encoding.UTF8.GetBytes(secretKey);
+            var secretKeyInBytes = System.Text.Encoding.UTF8.GetBytes(_authenticationSettings.SecretKey);
 
             var symmetricSecurityKey = new SymmetricSecurityKey(secretKeyInBytes);
             return symmetricSecurityKey;

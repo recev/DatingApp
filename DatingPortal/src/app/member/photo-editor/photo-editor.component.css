@@ -1,0 +1,24 @@
+.img-thumbnail
+{
+  width: 50em;
+  height: auto;
+}
+
+.my-drop-zone {
+  border: dotted 3px lightgray;
+}
+
+.nv-file-over {
+  border: dotted 3px red;
+}
+
+.another-file-over-class {
+  border: dotted 3px green;
+}
+
+html, body { height: 100%; }
+
+/*hides the input text*/
+input[type=file]{
+  color: transparent;
+}
