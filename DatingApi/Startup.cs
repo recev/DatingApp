@@ -41,7 +41,7 @@ namespace DatingApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatingDbContext>((options) => {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnectionString"));
+                options.UseSqlServer(Configuration.GetConnectionString("LocalDb"));
             });
 
             // services.AddDbContext<DatingDbContext>((options) => {
