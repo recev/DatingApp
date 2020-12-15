@@ -29,7 +29,9 @@
       *ngIf="isLoggedIn()"
       dropdown
       class="nav-item dropdown show">
-      <img src="{{photoUrl}}" class="img-profile" alt="Profile Image">
+      <span class="m-1">
+        <img src="{{photoUrl}}" class="img-profile" alt="Profile Image">
+      </span>
       <a
         dropdownToggle
         class="btn btn-secondary dropdown-toggle"

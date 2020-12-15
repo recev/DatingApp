@@ -29,6 +29,21 @@ export class AuthorizationService {
     return currentMainPhoto.url;
   }
 
+  public addNewPhoto(photo: Photo)
+  {
+    const user = JSON.parse(localStorage.getItem('user')) as DetailedUser;
+    user.photos.push(photo);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  public deletePhoto(photo: Photo)
+  {
+    const user = JSON.parse(localStorage.getItem('user')) as DetailedUser;
+    const deletePhoto = user.photos.findIndex(p => p.id === photo.id);
+    user.photos.splice(deletePhoto, 1);
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
   public isLoggedIn() {
     return !this.jwtHelper.isTokenExpired();
   }

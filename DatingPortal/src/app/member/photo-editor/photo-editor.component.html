@@ -9,7 +9,12 @@
           [disabled] = "photo.isMain"
           [ngClass] = "photo.isMain ? 'btn-success active' : 'btn-secondary'"
           >Main</button>
-        <button class="btn btn-danger" (click) ="deletePhoto(photo)">Delete</button>
+        <button
+          class="btn btn-danger"
+          (click) ="deletePhoto(photo)"
+          [disabled] ="photo.isMain">
+          Delete
+        </button>
       </div>
     </div>
 
@@ -17,7 +22,7 @@
 
       <div class="col-md-3">
 
-        <h5>Select files</h5>
+        <h5>Add Photos</h5>
 
         <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)"
           [uploader]="uploader" class="card p-2 my-drop-zone bg-secondary text-center">
@@ -31,7 +36,7 @@
         <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
       </div>
 
-      <div class="col-md-9" style="margin-bottom: 40px">
+      <div class="col-md-9" style="margin-bottom: 40px" *ngIf="uploader?.queue?.length > 0">
 
         <h5>Upload queue</h5>
         <p>Queue length: {{ uploader?.queue?.length }}</p>

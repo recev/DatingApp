@@ -15,6 +15,8 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PhotoEditorComponent implements OnInit {
     @Input() photos: Photo[] = [];
+    // Output is used just for demostration perpuse
+    @Output() mainPhotoChanged = new EventEmitter<string>();
     public uploader: FileUploader;
     public hasBaseDropZoneOver = false;
     public faTrashAlt = faTrashAlt;
@@ -29,6 +31,10 @@ export class PhotoEditorComponent implements OnInit {
 
     ngOnInit(): void {
       this.initializeUploader();
+    }
+
+    fileOverBase(e: any): void {
+      this.hasBaseDropZoneOver = e;
     }
 
     initializeUploader(){
@@ -47,6 +53,7 @@ export class PhotoEditorComponent implements OnInit {
       this.uploader.onSuccessItem = (item, response, status, Headers) => {
         const photo = JSON.parse(response) as Photo;
         this.photos.push(photo);
+        this.authorizationService.addNewPhoto(photo);
       };
     }
 
@@ -55,9 +62,13 @@ export class PhotoEditorComponent implements OnInit {
       this.photoService.setMainPhoto(newMainPhoto).subscribe(
         v => {
           this.authorizationService.updateUserMainPhoto(newMainPhoto);
+
           const currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
           currentMainPhoto.isMain = false;
           newMainPhoto.isMain = true;
+          // just for demo purpose
+          this.mainPhotoChanged.emit(newMainPhoto.url);
+          //
         },
         e => this.toastr.error(e)
       );
@@ -73,14 +84,11 @@ export class PhotoEditorComponent implements OnInit {
           v => {
             const photoIndex = this.photos.findIndex(p => p.id === photo.id);
             this.photos.splice(photoIndex, 1);
+            this.authorizationService.deletePhoto(photo);
             this.toastr.success('Image deleted successfuly!');
           },
           e => this.toastr.error(e)
         );
     }
   }
-
-    public fileOverBase(e: any): void {
-      this.hasBaseDropZoneOver = e;
-    }
 }

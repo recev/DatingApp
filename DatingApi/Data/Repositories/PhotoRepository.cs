@@ -11,6 +11,7 @@ using DatingApi.Data.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace DatingApi.Data.Repositories
 {
@@ -58,10 +59,10 @@ namespace DatingApi.Data.Repositories
             return photo;
         }
 
-        public UploadPhotoResult UploadPhoto(UploadPhoto uploadPhoto)
+        public UploadPhotoResult UploadPhoto(int userId, IFormFile file)
         {
             var result = new UploadPhotoResult();
-            var uploadResult = UploadImageToCloudinary(uploadPhoto);
+            var uploadResult = UploadImageToCloudinary(userId, file);
 
             if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
             {
@@ -69,11 +70,11 @@ namespace DatingApi.Data.Repositories
                 return result;
             }
 
-            var isMainPhoto = IsMainPhoto(uploadPhoto);
+            var isMainPhoto = IsMainPhoto(userId);
 
             var newPhoto = new Photo()
             {
-                UserId = uploadPhoto.UserId,
+                UserId = userId,
                 PublicId = uploadResult.PublicId,
                 Url = uploadResult.SecureUrl.ToString(),
                 IsMain = isMainPhoto,
@@ -106,17 +107,17 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        private bool IsMainPhoto(UploadPhoto image)
+        private bool IsMainPhoto(int userId)
         {
             var isMainPhoto = true;
 
-            var mainPhoto = _context.Photos.FirstOrDefault(p => p.User.Id == image.UserId && p.IsMain);
+            var mainPhoto = _context.Photos.FirstOrDefault(p => p.User.Id == userId && p.IsMain);
             if (mainPhoto != null)
                 isMainPhoto = false;
             return isMainPhoto;
         }
 
-        private ImageUploadResult UploadImageToCloudinary(UploadPhoto image)
+        private ImageUploadResult UploadImageToCloudinary(int userId, IFormFile imageFile)
         {
             ImageUploadResult uploadResult = null;
             try
@@ -128,14 +129,15 @@ namespace DatingApi.Data.Repositories
                     Cloud = _cloudinarySettings.CloudName
                 };
 
-                using (var imageStream = image.File.OpenReadStream())
+                using (var imageStream = imageFile.OpenReadStream())
                 {
                     var cloudinary = new Cloudinary(account);
-
-                    uploadResult = cloudinary.Upload(new ImageUploadParams
+                    var uploadParams = new ImageUploadParams
                     {
-                        File = new FileDescription(image.File.Name, imageStream)
-                    });
+                        File = new FileDescription(imageFile.Name, imageStream)
+                    };
+
+                    uploadResult = cloudinary.Upload(uploadParams);
                 }
             }
             catch (System.Exception ex)
@@ -171,32 +173,43 @@ namespace DatingApi.Data.Repositories
             return deletionResult;
         }
 
-        public bool SetMainPhoto(int userId, int photoId)
+        public OperationResult SetMainPhoto(int userId, int photoId)
         {
-            bool result = false;
+            var result = new OperationResult();
 
             try
             {
                 var dbPhoto = FindPhoto(userId, photoId);
 
                 if (dbPhoto == null)
+                {
+                    result.Message = "Photo not found!";
                     return result;
+                }
 
                 var mainPhotoInDb = GetMainPhotoOfUser(userId);
 
                 if (mainPhotoInDb?.Id == photoId)
+                {
+                    result.Message = "It's already main photo!";
                     return result;
+                }
 
-                mainPhotoInDb.IsMain = false;
                 dbPhoto.IsMain = true;
+
+                if(mainPhotoInDb != null)
+                {
+                    mainPhotoInDb.IsMain = false;
+                }
 
                 _context.SaveChanges();
 
-                result = true;
+                result.IsSuccessful = true;
+                return result;
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                result.Message = ex.Message;
             }
 
             return result;

@@ -55,4 +55,8 @@ export class MemberEditComponent implements OnInit {
       e => this.toastr.error(e)
     );
   }
+
+  mainPhotoChanged(newUrl){
+    console.log('new main url ' + newUrl);
+  }
 }

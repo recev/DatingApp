@@ -5,11 +5,13 @@ using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace DatingApi.Controllers
 {
     [Route("api/users/{userId}/[controller]")]
     [Authorize]
+    [ApiController]
     public class PhotosController: ControllerBase
     {
         IPhotoRepository _photoRepository;
@@ -50,12 +52,12 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult UploadPhoto(UploadPhoto uploadPhoto)
+        public IActionResult UploadPhoto(int userId, [FromForm] IFormFile file)
         {
-            if(CurrentUserId != uploadPhoto.UserId)
+            if(CurrentUserId != userId)
                 return Unauthorized();
 
-            var result = _photoRepository.UploadPhoto(uploadPhoto);
+            var result = _photoRepository.UploadPhoto(userId, file);
 
             if(result.IsSuccessful)
                 return CreatedAtRoute("GetPhoto", new {userId = CurrentUserId, photoId=result.Photo.Id }, result.Photo);
@@ -69,12 +71,12 @@ namespace DatingApi.Controllers
             if(CurrentUserId != userId)
                 return Unauthorized();
 
-            bool result = _photoRepository.SetMainPhoto(userId, photoId);
+            var result = _photoRepository.SetMainPhoto(userId, photoId);
 
-            if(result)
+            if(result.IsSuccessful)
                 return Ok();
             else
-                return BadRequest();
+                return BadRequest(result.Message);
         }
     }
 }
