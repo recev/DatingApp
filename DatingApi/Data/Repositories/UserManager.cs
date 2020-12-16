@@ -39,7 +39,23 @@ namespace DatingApi.Data.Repositories
 
             return user;
         }
-        
+
+        public DetailedUser GetUserDetails(string username)
+        {
+            DetailedUser detailedUser = null;
+            try
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Username == username);
+                detailedUser = _mapper.Map<DetailedUser>(user);
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+             
+            return detailedUser;
+        }
+
         public IList<CompactUser> GetUserList()
         {
             IList<CompactUser> users = null;

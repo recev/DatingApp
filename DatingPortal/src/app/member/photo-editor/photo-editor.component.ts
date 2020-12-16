@@ -66,9 +66,6 @@ export class PhotoEditorComponent implements OnInit {
           const currentMainPhoto = this.photos.filter(p => p.isMain === true)[0];
           currentMainPhoto.isMain = false;
           newMainPhoto.isMain = true;
-          // just for demo purpose
-          this.mainPhotoChanged.emit(newMainPhoto.url);
-          //
         },
         e => this.toastr.error(e)
       );

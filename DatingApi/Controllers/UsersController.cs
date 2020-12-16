@@ -29,7 +29,7 @@ namespace DatingApp.API.Controllers
             this._userManager = userManager;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetUser")]
         public ActionResult GetUser(int id)
         {
             var user = _userManager.GetUserDetails(id);

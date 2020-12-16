@@ -1,6 +1,6 @@
 <div class="card m-4" style="width: 18rem;">
   <div class="card-img-wrapper">
-    <img class="card-img-top rounded" src="{{user.photoUrl}}" alt="{{user.knownAs}}">
+    <img class="card-img-top rounded" src="{{user.photoUrl  || '../../assets/user.png'}}" alt="{{user.knownAs}}">
     <ul class="list-group list-group-horizontal justify-content-center member-icons">
       <li
         [routerLink]="['/members', user.id]"

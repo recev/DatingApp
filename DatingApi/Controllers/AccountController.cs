@@ -33,7 +33,10 @@ namespace DatingApi.Controllers
             var isUserCreated = _userManager.SaveUser(user);
 
             if(isUserCreated)
-                return Ok(registerUser);
+            {
+                var detailedUser = _userManager.GetUserDetails(registerUser.Username);
+                return CreatedAtRoute("GetUser", new { Controller= "Users", id = detailedUser.Id }, detailedUser);
+            }
             else
                 return BadRequest("User can not be registered!");
         }

@@ -7,6 +7,7 @@ namespace DatingApi.Data.Repositories
     public interface IUserManager
     {   
         DetailedUser GetUserDetails(int id);
+        DetailedUser GetUserDetails(string username);
         IList<CompactUser> GetUserList();
         bool DoesUserExist(string userName);
         User FindUser(string userName);

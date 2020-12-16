@@ -2,8 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { AuthorizationService } from '../services/authorization.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { faSlash, faSearch } from '@fortawesome/free-solid-svg-icons';
-import { DetailedUser } from '../models/detailed-user';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-register',
@@ -35,11 +34,12 @@ export class RegisterComponent implements OnInit {
 
   register(){
     console.log(this.registerForm.value);
-    const user = this.registerForm.value as DetailedUser;
+    const user = this.registerForm.value as User;
 
-    this.authService.register(user.username, user.password)
+    this.authService.register(user)
     .subscribe(value => {
       this.toastr.success('User registred successfuly');
+      console.log(value);
     }, error => {
       this.toastr.error(error);
     });

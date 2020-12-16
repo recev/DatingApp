@@ -6,6 +6,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { DetailedUser } from '../models/detailed-user';
 import { BehaviorSubject } from 'rxjs';
 import { Photo } from '../models/photo';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +35,7 @@ export class AuthorizationService {
     const user = JSON.parse(localStorage.getItem('user')) as DetailedUser;
     user.photos.push(photo);
     localStorage.setItem('user', JSON.stringify(user));
+    this.changeUserPhoto(photo.url);
   }
 
   public deletePhoto(photo: Photo)
@@ -42,6 +44,7 @@ export class AuthorizationService {
     const deletePhoto = user.photos.findIndex(p => p.id === photo.id);
     user.photos.splice(deletePhoto, 1);
     localStorage.setItem('user', JSON.stringify(user));
+    this.changeUserPhoto(photo.url);
   }
 
   public isLoggedIn() {
@@ -116,13 +119,8 @@ export class AuthorizationService {
     localStorage.removeItem('user');
   }
 
-  register(userName: string, password: string) {
+  register(user: User) {
     const registerUrl = environment.baseUrl + 'account/register';
-    const user = {
-      UserName: userName,
-      Password: password
-    };
-
     return this.httpClient.post(registerUrl, user);
   }
 }
