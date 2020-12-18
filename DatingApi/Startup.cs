@@ -25,6 +25,7 @@ using DatingApi.Data.Repositories;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Options;
 using DatingApi.Settings;
+using DatingApi.Filters;
 
 namespace DatingApi
 {
@@ -49,10 +50,13 @@ namespace DatingApi
             // });
 
             services.AddControllers();
-            services.AddControllers().AddNewtonsoftJson(setup => { setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;});
+            services.AddControllers().AddNewtonsoftJson(setup => {
+                setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
             services.AddScoped<IAuthorization, Authorization>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<LogUserActivity>();
             services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
             services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));
             

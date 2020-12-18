@@ -11,8 +11,10 @@ namespace DatingApi.Data.Repositories
         IList<CompactUser> GetUserList();
         bool DoesUserExist(string userName);
         User FindUser(string userName);
+        User FindUser(int userId);
         bool SaveUser(User user);
         bool DeleteUser(string userName);
         bool UpdateUser(UpdateUser updateUser);
+        bool UpdateLastActive(int userId);
     }
 }

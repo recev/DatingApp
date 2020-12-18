@@ -4,12 +4,14 @@ using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using DatingApi.Filters;
 
 namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
+    [ServiceFilter(typeof(LogUserActivity))]
     public class UsersController: ControllerBase
     {
         IUserManager _userManager;

@@ -4,7 +4,6 @@ import { AuthorizationService } from 'src/app/services/authorization.service';
 import { UserService } from 'src/app/services/user.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgForm } from '@angular/forms';
-import { Photo } from 'src/app/models/photo';
 
 @Component({
   selector: 'app-member-edit',

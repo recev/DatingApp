@@ -106,6 +106,21 @@ namespace DatingApi.Data.Repositories
             return user;
         }
 
+        public User FindUser(int userId)
+        {
+            User user = null;
+            try
+            {
+                user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+             
+            return user;
+        }
+
         public bool DoesUserExist(string username)
         {
             var result = false;
@@ -163,6 +178,31 @@ namespace DatingApi.Data.Repositories
 
                 _context.SaveChanges();
                 
+                result = true;
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+
+            return result;
+        }
+
+        public bool UpdateLastActive(int userId)
+        {
+            bool result = false;
+
+            try
+            {
+                var dbUser = FindUser(userId);
+
+                if(dbUser == null)
+                    return result;
+
+                dbUser.LastActive = System.DateTime.Now;
+
+                _context.SaveChanges();
+
                 result = true;
             }
             catch (System.Exception ex)
