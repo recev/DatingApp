@@ -97,19 +97,23 @@ namespace DatingApi
 
             //app.UseHttpsRedirection();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            
             app.UseRouting();
             app.UseCors(p => {
                 p.AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowAnyOrigin();
             });
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
             });
         }
 
