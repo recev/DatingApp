@@ -6,6 +6,7 @@ using Data;
 using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace DatingApi.Data.Repositories
 {
@@ -13,11 +14,13 @@ namespace DatingApi.Data.Repositories
     {
         DatingDbContext _context;
         IMapper _mapper;
+        ILogger<UserManager> _logger;
         
-        public UserManager(DatingDbContext context, IMapper mapper)
+        public UserManager(DatingDbContext context, IMapper mapper, ILogger<UserManager> logger)
         {
             this._context = context;
             this._mapper = mapper;
+            this._logger = logger;
         }
 
         public DetailedUser GetUserDetails(int id)
@@ -34,7 +37,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return user;
@@ -50,7 +53,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
              
             return detailedUser;
@@ -67,7 +70,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
             
             return users;
@@ -85,7 +88,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -100,7 +103,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
              
             return user;
@@ -115,7 +118,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
              
             return user;
@@ -134,7 +137,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -157,7 +160,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -182,7 +185,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -207,7 +210,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;

@@ -42,7 +42,7 @@ namespace DatingApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatingDbContext>((options) => {
-                options.UseSqlServer(Configuration.GetConnectionString("LocalDb"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             });
 
             // services.AddDbContext<DatingDbContext>((options) => {

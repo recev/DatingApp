@@ -7,15 +7,19 @@ using System.Security.Claims;
 using System.IdentityModel.Tokens.Jwt;
 using DatingApi.Settings;
 using Microsoft.Extensions.Options;
+using Microsoft.Extensions.Logging;
 
 namespace DatingApi.Data.Repositories
 {
     public class Authorization : IAuthorization
     {
         AuthenticationSettings _authenticationSettings;
-        public Authorization(IOptions<AuthenticationSettings> authenticationSettings)
+        ILogger<Authorization> _logger;
+
+        public Authorization(IOptions<AuthenticationSettings> authenticationSettings, ILogger<Authorization> logger)
         {
             this._authenticationSettings = authenticationSettings.Value;
+            this._logger = logger;
         }
 
         public string GenerateToken(User user)
@@ -34,7 +38,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
             return token;
         }
@@ -88,7 +92,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -113,7 +117,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return user;

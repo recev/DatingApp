@@ -38,7 +38,7 @@ namespace DatingApi.Data
                     if (context.Users.Any())
                         return;
                     
-                    logger.LogInformation("Seeding database completed!");
+                    logger.LogInformation("Seeding database started!");
                     
                     var jsonString = File.ReadAllText(fileName);
                     var seedUsers = JsonConvert.DeserializeObject<IList<User>>(jsonString);

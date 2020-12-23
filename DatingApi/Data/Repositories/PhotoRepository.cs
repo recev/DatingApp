@@ -12,6 +12,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace DatingApi.Data.Repositories
 {
@@ -20,12 +21,14 @@ namespace DatingApi.Data.Repositories
         CloudinarySettings _cloudinarySettings;
         DatingDbContext _context;
         IMapper _mapper;
+        ILogger<PhotoRepository> _logger;
 
-        public PhotoRepository(IOptions<CloudinarySettings> cloudinarySettingOptions, DatingDbContext context, IMapper mapper)
+        public PhotoRepository(IOptions<CloudinarySettings> cloudinarySettingOptions, DatingDbContext context, IMapper mapper, ILogger<PhotoRepository> logger)
         {
             this._cloudinarySettings = cloudinarySettingOptions.Value;
             this._context = context;
             this._mapper = mapper;
+            this._logger = logger;
         }
 
         public PhotoForClient GetPhoto(int userId, int photoId)
@@ -38,7 +41,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return clientPhoto;
@@ -53,7 +56,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return photo;
@@ -101,7 +104,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -142,7 +145,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return uploadResult;
@@ -167,7 +170,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return deletionResult;
@@ -210,6 +213,7 @@ namespace DatingApi.Data.Repositories
             catch (System.Exception ex)
             {
                 result.Message = ex.Message;
+                _logger.LogError(ex.Message);
             }
 
             return result;
@@ -226,7 +230,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return photo;
@@ -282,7 +286,7 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
-                System.Console.WriteLine(ex.Message);
+                _logger.LogError(ex.Message);
             }
 
             return result;
