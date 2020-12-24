@@ -15,7 +15,6 @@ namespace DatingApi.Data
     public class DatabaseSeeder
     {
         IHost _host;
-        string fileName = @"C:\Work\learn\DatingApp\DatingApi\Data\DatabaseSeedData.json";
 
         public DatabaseSeeder(IHost host)
         {
@@ -33,13 +32,18 @@ namespace DatingApi.Data
                     var context = scope.ServiceProvider.GetRequiredService<DatingDbContext>();
                     var authorization = scope.ServiceProvider.GetRequiredService<IAuthorization>();
 
+                    logger.LogError("Database migration started!");
+
                     context.Database.Migrate();
+
+                    logger.LogError("Database migration completed!");
 
                     if (context.Users.Any())
                         return;
                     
                     logger.LogInformation("Seeding database started!");
                     
+                    string fileName = Path.Combine(Directory.GetCurrentDirectory(), "Data","DatabaseSeedData.json");
                     var jsonString = File.ReadAllText(fileName);
                     var seedUsers = JsonConvert.DeserializeObject<IList<User>>(jsonString);
 
