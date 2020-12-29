@@ -9,6 +9,8 @@ import { RouterModule } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from 'ngx-gallery-9';
@@ -67,6 +69,8 @@ export function tokenGetter() {
     RouterModule.forRoot(appRoutes),
     BsDropdownModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    PaginationModule.forRoot(),
+    ButtonsModule.forRoot(),
     TabsModule.forRoot(),
     ToastrModule.forRoot(),
     JwtModule.forRoot({

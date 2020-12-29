@@ -8,7 +8,7 @@ namespace DatingApi.Data.Repositories
     {   
         DetailedUser GetUserDetails(int id);
         DetailedUser GetUserDetails(string username);
-        IList<CompactUser> GetUserList();
+        PaginatedUserList GetUserList(SearchUser searchUser);
         bool DoesUserExist(string userName);
         User FindUser(string userName);
         User FindUser(int userId);

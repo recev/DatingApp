@@ -1,3 +1,85 @@
+<div class="text-center mt-3">
+  <h2>Your matches - {{totalUserCount}} </h2>
+</div>
+<form
+  #filterForm="ngForm"
+  (ngSubmit)="loadUsers()"
+  class="form-inline" novalidate>
+  <div class="form-group">
+    <label for="minAge">Age From</label>
+    <input
+      [(ngModel)] ="minAge"
+      type="number"
+      name="minAge"
+      id="minAge"
+      class="form-control ml-1"
+      style="width: 70px">
+  </div>
+
+  <div class="form-group px-2">
+    <label for="maxAge">Age To</label>
+    <input
+      [(ngModel)] = "maxAge"
+      name="maxAge"
+      id="maxAge"
+      type="number"
+      class="form-control ml-1"
+      style="width: 70px">
+  </div>
+
+  <div class="form-group px-2">
+    <label for="gender">Show: </label>
+    <select
+      [(ngModel)] ="gender"
+      id="gender"
+      name="gender"
+      class="form-control ml-1"
+      style="width: 130px">
+      <option *ngFor="let gender of genders" [value]="gender.value">
+        {{gender.display}}
+      </option>
+    </select>
+  </div>
+
+  <div class="btn-group ml-2 mr-2">
+    <button
+      [(ngModel)]="orderBy"
+      btnRadio="created"
+      (click)="loadUsers()"
+      name="orderBy"
+      type="button"
+      class="btn btn-primary"
+      tabindex="0"
+      role="button">Order by Created</button>
+    <button
+      [(ngModel)]="orderBy"
+      btnRadio="lastActive"
+      (click)="loadUsers()"
+      name="orderBy"
+      type="button"
+      class="btn btn-primary"
+      tabindex="0"
+      role="button">Order by Last Active</button>
+  </div>
+
+  <button
+    (click)="loadUsers()"
+    type="submit"
+    class="btn btn-primary"
+    style="margin-left:10px">Apply Filters</button>
+  <button
+    (click)="resetFilters()"
+    type="button"
+    class="btn btn-info"
+    style="margin-left:10px">Reset Filter</button>
+</form>
+<br>
+<div class="row">
+  <div class="col-xs-12 col-12">
+    <pagination [totalItems]="totalUserCount" [(ngModel)]="pageNumber" (pageChanged)="pageChanged($event)"></pagination>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div

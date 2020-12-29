@@ -57,10 +57,9 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet("UserList")]
-        public ActionResult GetUserList()
+        public ActionResult GetUserList([FromQuery] SearchUser searchUser)
         {
-            return Ok(_userManager.GetUserList());
+            return Ok(_userManager.GetUserList(searchUser));
         }
-
     }
 }

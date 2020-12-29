@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient} from '@angular/common/http';
+import { HttpClient, HttpParams} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { CompactUser } from '../models/compact-user';
 import { DetailedUser } from '../models/detailed-user';
+import { PaginatedUserList } from '../models/paginated-user-list';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,17 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUsers()
+  getUsers(pageNumber: number, pageSize: number , minAge: number, maxAge: number, gender: string, orderBy: string)
   {
-    return this.httpClient.get<CompactUser[]>(environment.baseUrl + 'users/UserList');
+    const params = new HttpParams()
+    .set('pageNumber', pageNumber.toString())
+    .set('pageSize', pageSize.toString())
+    .set('minAge', minAge.toString())
+    .set('maxAge', maxAge.toString())
+    .set('gender', gender)
+    .set('orderBy', orderBy);
+
+    return this.httpClient.get<PaginatedUserList>(environment.baseUrl + 'users/UserList', { params });
   }
 
   getUser(id: string)

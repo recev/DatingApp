@@ -59,21 +59,48 @@ namespace DatingApi.Data.Repositories
             return detailedUser;
         }
 
-        public IList<CompactUser> GetUserList()
+        public PaginatedUserList GetUserList(SearchUser searchUser)
         {
-            IList<CompactUser> users = null;
+            PaginatedUserList paginatedUserList = null;
 
             try
             {
-                var dbUsers = _context.Users.Include(user => user.Photos).ToList();
-                users = _mapper.Map<IList<CompactUser>>(dbUsers);
+                var query = _context.Users.Include(user => user.Photos).AsQueryable();
+
+                if(searchUser.OrderBy.ToLowerInvariant() == "created")
+                    query = query.OrderByDescending(u => u.Created);
+                else
+                    query = query.OrderByDescending(u => u.LastActive);
+
+                var maxAge = DateTime.Now.AddYears(-searchUser.MinAge - 1);
+                var minAge = DateTime.Now.AddYears(-searchUser.MaxAge - 1);
+
+                query = query.Where(u => u.DateOfBirth >= minAge && u.DateOfBirth <= maxAge);
+
+                if(searchUser.Gender != "all")
+                    query = query.Where(q => q.Gender == searchUser.Gender);
+
+                var userCount = query.Count();
+
+                var itemsToSkip = (searchUser.PageNumber - 1) * searchUser.PageSize;
+                query = query.Skip(itemsToSkip);
+                query = query.Take(searchUser.PageSize);
+
+                var UserList = _mapper.Map<IList<CompactUser>>(query.ToList());
+
+                paginatedUserList = new PaginatedUserList{
+                    PageNumber = searchUser.PageNumber,
+                    PageSize = searchUser.PageSize,
+                    TotalUserCount = userCount,
+                    Users = UserList
+                };
             }
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
             
-            return users;
+            return paginatedUserList;
         }
 
         public bool SaveUser(User user)

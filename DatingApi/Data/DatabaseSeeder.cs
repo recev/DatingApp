@@ -32,11 +32,11 @@ namespace DatingApi.Data
                     var context = scope.ServiceProvider.GetRequiredService<DatingDbContext>();
                     var authorization = scope.ServiceProvider.GetRequiredService<IAuthorization>();
 
-                    logger.LogError("Database migration started!");
+                    logger.LogInformation("Database migration started!");
 
                     context.Database.Migrate();
 
-                    logger.LogError("Database migration completed!");
+                    logger.LogInformation("Database migration completed!");
 
                     if (context.Users.Any())
                         return;
