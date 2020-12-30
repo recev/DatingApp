@@ -56,6 +56,7 @@ namespace DatingApi
             services.AddScoped<IAuthorization, Authorization>();
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddScoped<LogUserActivity>();
             services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
             services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));

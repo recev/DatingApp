@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { CompactUser } from '../models/compact-user';
 import { DetailedUser } from '../models/detailed-user';
 import { PaginatedUserList } from '../models/paginated-user-list';
 

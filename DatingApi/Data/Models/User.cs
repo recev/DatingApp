@@ -25,5 +25,7 @@ namespace DatingApi.Data.Models
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSaltKey { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Like> SendedLikes { get; set; }
+        public ICollection<Like> ReceivedLikes { get; set; }
     }
 }

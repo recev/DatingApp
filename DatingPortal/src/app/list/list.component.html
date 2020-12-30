@@ -1,1 +1,26 @@
-<p>list works!</p>
+<div class="text-center mt-3">
+  <h2>{{showSendedLikes ? 'Members who I\'ve Liked' : 'Members who like me'}}</h2>
+</div>
+
+<div class="container mt-3">
+
+<div class="row">
+  <div class="btn-group">
+    <button class="btn btn-primary" [(ngModel)]="showSendedLikes" btnRadio="true" (click)="loadSended()">Members who I like</button>
+    <button class="btn btn-primary" [(ngModel)]="showSendedLikes" btnRadio="false" (click)="loadReceived()">Members who like me</button>
+
+  </div>
+</div>
+
+<br>
+
+<div class="container">
+  <div class="row">
+    <div
+      *ngFor="let user of users">
+        <app-member-card [user] ="user" ></app-member-card>
+    </div>
+  </div>
+</div>
+
+</div>
