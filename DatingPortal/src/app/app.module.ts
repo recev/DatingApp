@@ -30,6 +30,7 @@ import { MemberListComponent } from './member/member-list/member-list.component'
 import { MemberDetailComponent } from './member/member-detail/member-detail.component';
 import { MemberCardComponent } from './member/member-card/member-card.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
+import { MemberMessageComponent } from './member/member-message/member-message.component';
 import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
 
 // services
@@ -40,7 +41,6 @@ import { environment } from 'src/environments/environment';
 export function tokenGetter() {
   return localStorage.getItem('access_token');
 }
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,6 +54,7 @@ export function tokenGetter() {
     MemberDetailComponent,
     MemberCardComponent,
     MemberEditComponent,
+    MemberMessageComponent,
     PhotoEditorComponent
   ],
   imports: [

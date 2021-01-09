@@ -27,5 +27,7 @@ namespace DatingApi.Data.Models
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Like> SendedLikes { get; set; }
         public ICollection<Like> ReceivedLikes { get; set; }
+        public ICollection<Message> SentMessages { get; set; }
+        public ICollection<Message> ReceivedMessages { get; set; }
     }
 }

@@ -13,6 +13,7 @@ namespace Data
         public DbSet<User> Users { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +31,16 @@ namespace Data
                 .HasOne(l => l.Receiver)
                 .WithMany(u => u.ReceivedLikes)
                 .HasForeignKey(l => l.ReceivedId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany(u => u.SentMessages)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Recipient)
+                .WithMany(u => u.ReceivedMessages)
                 .OnDelete(DeleteBehavior.NoAction);
 
             //base.OnModelCreating(modelBuilder);

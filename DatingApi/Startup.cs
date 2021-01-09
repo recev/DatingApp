@@ -42,7 +42,8 @@ namespace DatingApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatingDbContext>((options) => {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"))
+                        .EnableSensitiveDataLogging();
             });
 
             // services.AddDbContext<DatingDbContext>((options) => {
@@ -57,6 +58,7 @@ namespace DatingApi
             services.AddScoped<IUserManager, UserManager>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddScoped<ImessageRepository, MessageRepository>(); 
             services.AddScoped<LogUserActivity>();
             services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
             services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));

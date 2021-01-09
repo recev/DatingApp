@@ -41,6 +41,17 @@ namespace DatingApi.Data
 
             CreateMap<UpdateUser, User>();
 
+            CreateMap<Message, MessageDto>()
+            .ForMember(
+                p => p.SenderPhotoUrl, 
+                opt => opt.MapFrom(m => m.Sender.Photos.FirstOrDefault(p => p.IsMain == true).Url))
+            .ForMember(
+                p => p.RecipientPhotoUrl, 
+                opt => opt.MapFrom(m => m.Recipient.Photos.FirstOrDefault(p => p.IsMain == true).Url));
+
+            CreateMap<UserMessage, Message>();
+
+
         }
 
         private int GetAge(DateTime dateOfBirth)
