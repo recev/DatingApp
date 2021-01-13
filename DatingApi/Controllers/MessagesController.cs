@@ -18,13 +18,13 @@ namespace DatingApi.Controllers
         ImessageRepository _messageRepository;
 
 
-        public int CurrentUserId {
+        public string CurrentUserId {
             get {
                 var NameIdentifierClaim = User.Claims
                     .Where(c => c.Type == ClaimTypes.NameIdentifier)
                     .FirstOrDefault();
                     
-                return int.Parse(NameIdentifierClaim.Value);
+                return NameIdentifierClaim.Value;
             }
         }
 
@@ -34,7 +34,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpGet("{messageId}", Name = "GetMessage")]
-        public IActionResult GetMessage(int userId, int messageId)
+        public IActionResult GetMessage(string userId, int messageId)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();
@@ -48,7 +48,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateMessage(int userId, UserMessage userMessage)
+        public IActionResult CreateMessage(string userId, UserMessage userMessage)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();
@@ -63,7 +63,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpGet("unread")]
-        public IActionResult GetUnreadMessages(int userId)
+        public IActionResult GetUnreadMessages(string userId)
         {
             var messages = _messageRepository.GetUnreadMessages(userId);
 
@@ -74,7 +74,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpGet("inbox")]
-        public IActionResult GetInboxMessages(int userId)
+        public IActionResult GetInboxMessages(string userId)
         {
             var messages = _messageRepository.GetInboxMessages(userId);
 
@@ -85,7 +85,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpGet("outbox")]
-        public IActionResult GetOutboxMessages(int userId)
+        public IActionResult GetOutboxMessages(string userId)
         {
             var messages = _messageRepository.GetOutboxMessages(userId);
 
@@ -96,7 +96,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpGet("thread/{recipientId}")]
-        public IActionResult GetMessageThread(int userId, int recipientId)
+        public IActionResult GetMessageThread(string userId, string recipientId)
         {
             var messageThread = _messageRepository.GetMessageThread(userId, recipientId);
 
@@ -107,7 +107,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpDelete("{messageId}")]
-        public IActionResult DeleteMessage(int userId, int messageId)
+        public IActionResult DeleteMessage(string userId, int messageId)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();
@@ -121,7 +121,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost("{messageId}/read")]
-        public IActionResult MarkAsRead(int userId, int messageId)
+        public IActionResult MarkAsRead(string userId, int messageId)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();

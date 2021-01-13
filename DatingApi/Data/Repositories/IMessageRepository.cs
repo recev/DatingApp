@@ -9,11 +9,11 @@ namespace DatingApi.Data.Repositories
     {
         MessageDto GetDetailedMessage(int messageId);
         CreateMessageResult CreateMessage(UserMessage userMessage);
-        IList<MessageDto> GetUnreadMessages(int userId);
-        IList<MessageDto> GetInboxMessages(int userId);
-        IList<MessageDto> GetOutboxMessages(int userId);
-        IList<MessageDto> GetMessageThread(int userId, int recipientId);
-        OperationResult DeleteMessage(int userId, int messageId);
-        OperationResult MarkAsRead(int userId, int messageId);
+        IList<MessageDto> GetUnreadMessages(string userId);
+        IList<MessageDto> GetInboxMessages(string userId);
+        IList<MessageDto> GetOutboxMessages(string userId);
+        IList<MessageDto> GetMessageThread(string userId, string recipientId);
+        OperationResult DeleteMessage(string userId, int messageId);
+        OperationResult MarkAsRead(string userId, int messageId);
     }
 }

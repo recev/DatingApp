@@ -14,10 +14,10 @@ namespace DatingApi.Data.Repositories
     {
         ILogger<LikeRepository> _logger;
         DatingDbContext _context;
-        IUserManager _userManager;
+        IuserRepository _userManager;
         IMapper _mapper;
 
-        public LikeRepository(DatingDbContext context, ILogger<LikeRepository> logger, IUserManager userManager, IMapper mapper)
+        public LikeRepository(DatingDbContext context, ILogger<LikeRepository> logger, IuserRepository userManager, IMapper mapper)
         {
             this._context = context;
             this._logger = logger;
@@ -25,7 +25,7 @@ namespace DatingApi.Data.Repositories
             this._mapper = mapper;
         }
 
-        public IList<CompactUser> GetLikeSendedUsers(int userId)
+        public IList<CompactUser> GetLikeSendedUsers(string userId)
         {
             IList<CompactUser> users = null;
             try
@@ -46,7 +46,7 @@ namespace DatingApi.Data.Repositories
             return users;
         }
 
-        public IList<CompactUser> GetLikeReceivedFromUsers(int userId)
+        public IList<CompactUser> GetLikeReceivedFromUsers(string userId)
         {
             IList<CompactUser> users = null;
             try
@@ -67,7 +67,7 @@ namespace DatingApi.Data.Repositories
             return users;
         }
 
-        public OperationResult LikeUser(int userId, int receiverId)
+        public OperationResult LikeUser(string userId, string receiverId)
         {
             var result = new OperationResult();
 
@@ -79,7 +79,7 @@ namespace DatingApi.Data.Repositories
                 return result;
             }
 
-            var likeReceiver = _userManager.FindUser(receiverId);
+            var likeReceiver = _userManager.FindUserByUserId(receiverId);
 
             if (likeReceiver == null)
             {
@@ -102,7 +102,7 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        public Like GetLike(int userId, int receiverId)
+        public Like GetLike(string userId, string receiverId)
         {
             Like like = null;
             try
@@ -119,7 +119,7 @@ namespace DatingApi.Data.Repositories
             return like;
         }
 
-        public bool SaveLike(int userId, int receiverId)
+        public bool SaveLike(string userId, string receiverId)
         {
             var result = false;
 

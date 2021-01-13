@@ -10,6 +10,6 @@ namespace DatingApi.Data.DataTransferObjects
         public DateTime AddedDate { get; set; }
         public Boolean IsMain { get; set; }
         public string PublicId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

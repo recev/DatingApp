@@ -9,7 +9,7 @@ namespace DatingApi.Data.DataTransferObjects
         private int pageSize = 10;
         public int PageSize {
             get{
-                return pageSize;
+                return pageSize == 0 ? maxPageSize : pageSize;
             }
             set{
                 pageSize = value >= 10 ? maxPageSize : value;
@@ -22,7 +22,7 @@ namespace DatingApi.Data.DataTransferObjects
         public int MinAge
         {
             get {
-                return minAge;
+                return minAge == 0 ? minValidAge : minAge;
             }
             set { 
                 minAge = (value < minValidAge) ? minValidAge : value;
@@ -35,7 +35,7 @@ namespace DatingApi.Data.DataTransferObjects
         public int MaxAge
         {
             get {
-                return maxAge;
+                return maxAge == 0 ? maxValidAge : maxAge;
             }
             set {
                 maxAge = (value > maxValidAge) ? maxValidAge : value;
@@ -46,7 +46,7 @@ namespace DatingApi.Data.DataTransferObjects
         public string Gender
         {
             get {
-                return gender;
+                return gender ?? "all";
             }
             set { 
                     if(value.ToLowerInvariant() == "male")

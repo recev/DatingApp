@@ -4,7 +4,7 @@ namespace DatingApi.Data.DataTransferObjects
 {
     public class CompactUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Gender { get; set; }

@@ -7,7 +7,7 @@ namespace DatingApi.Data.DataTransferObjects
 {
     public class DetailedUser
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string Gender { get; set; }
@@ -21,6 +21,7 @@ namespace DatingApi.Data.DataTransferObjects
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
         public string PhotoUrl { get; set; }
-        public ICollection<PhotoForClient> Photos { get; set; }        
+        public ICollection<PhotoForClient> Photos { get; set; }
+        public ICollection<string> Roles { get; set; }
     }
 }

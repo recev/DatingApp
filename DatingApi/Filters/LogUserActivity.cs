@@ -17,9 +17,9 @@ namespace DatingApi.Filters
 
             var nameIdentifier = executedContext.HttpContext.User.Claims
                                     .FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
-            var userId = int.Parse(nameIdentifier.Value);
+            var userId = nameIdentifier.Value;
 
-            var userManager = executedContext.HttpContext.RequestServices.GetService<IUserManager>();
+            var userManager = executedContext.HttpContext.RequestServices.GetService<IuserRepository>();
 
             userManager.UpdateLastActive(userId);
         }

@@ -16,13 +16,13 @@ namespace DatingApi.Controllers
     {
         IPhotoRepository _photoRepository;
 
-        public int CurrentUserId {
+        public string CurrentUserId {
             get {
                 var NameIdentifierClaim = User.Claims
                     .Where(c => c.Type == ClaimTypes.NameIdentifier)
                     .FirstOrDefault();
                     
-                return int.Parse(NameIdentifierClaim.Value);
+                return NameIdentifierClaim.Value;
             }
         }
 
@@ -32,7 +32,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpDelete("{photoId}")]
-        public IActionResult DeletePhoto(int userId, int photoId)
+        public IActionResult DeletePhoto(string userId, int photoId)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();
@@ -45,14 +45,14 @@ namespace DatingApi.Controllers
                 return BadRequest(result.Message);
         }
         [HttpGet("{photoId}", Name="GetPhoto")]
-        public IActionResult GetPhoto(int userId, int photoId)
+        public IActionResult GetPhoto(string userId, int photoId)
         {
             var photo = _photoRepository.GetPhoto(userId, photoId);
             return Ok(photo);
         }
 
         [HttpPost]
-        public IActionResult UploadPhoto(int userId, [FromForm] IFormFile file)
+        public IActionResult UploadPhoto(string userId, [FromForm] IFormFile file)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();
@@ -66,7 +66,7 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost("{photoId}/setmain")]
-        public IActionResult SetMainPhoto(int userId, int photoId)
+        public IActionResult SetMainPhoto(string userId, int photoId)
         {
             if(CurrentUserId != userId)
                 return Unauthorized();

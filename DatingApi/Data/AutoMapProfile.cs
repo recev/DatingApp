@@ -35,7 +35,15 @@ namespace DatingApi.Data
                         .FirstOrDefault(photo => photo.IsMain)
                         .Url
                     )
+                )
+                .ForMember(user => user.Roles, 
+                    configuration => configuration.MapFrom(
+                        user => user.UserRoles.Select(userRole => userRole.Role.Name)
+                    )
                 );
+
+            CreateMap<User, RegisterUser>();
+            CreateMap<RegisterUser, User>();
 
             CreateMap<Photo, PhotoForClient>();
 

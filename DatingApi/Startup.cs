@@ -1,31 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
 using AutoMapper;
+using Newtonsoft.Json;
 
 using Data;
-
 using DatingApi.Data.Repositories;
-using Newtonsoft.Json;
-using Microsoft.Extensions.Options;
 using DatingApi.Settings;
 using DatingApi.Filters;
+using DatingApi.Data.Models;
 
 namespace DatingApi
 {
@@ -50,19 +42,20 @@ namespace DatingApi
             //     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString"));
             // });
 
-            services.AddControllers();
-            services.AddControllers().AddNewtonsoftJson(setup => {
-                setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            var identityBuilder = services.AddIdentityCore<User>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 4;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
             });
-            services.AddScoped<IAuthorization, Authorization>();
-            services.AddScoped<IUserManager, UserManager>();
-            services.AddScoped<IPhotoRepository, PhotoRepository>();
-            services.AddScoped<ILikeRepository, LikeRepository>();
-            services.AddScoped<ImessageRepository, MessageRepository>(); 
-            services.AddScoped<LogUserActivity>();
-            services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
-            services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));
-            
+
+            identityBuilder = new Microsoft.AspNetCore.Identity.IdentityBuilder(identityBuilder.UserType, typeof(Role), services);
+
+            identityBuilder.AddEntityFrameworkStores<DatingDbContext>();
+            identityBuilder.AddRoleValidator<RoleValidator<Role>>();
+            identityBuilder.AddRoleManager<RoleManager<Role>>();
+            identityBuilder.AddSignInManager<SignInManager<User>>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options => {
                 
@@ -78,8 +71,27 @@ namespace DatingApi
                             IssuerSigningKey = IssuerSigningKey  
                         };
                     });
+            
+            services.AddAuthorization(options => {
+                options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("MemberPolicy", policy => policy.RequireRole("Member"));
+                options.AddPolicy("ModeratorPolicy", policy => policy.RequireRole("Admin", "Moderator"));
+            });
 
-            	services.AddAutoMapper(typeof(UserManager).Assembly);
+            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(setup => {
+                setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+            services.AddScoped<IAuthorization, Authorization>();
+            services.AddScoped<IuserRepository, userRepository>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddScoped<ILikeRepository, LikeRepository>();
+            services.AddScoped<ImessageRepository, MessageRepository>(); 
+            services.AddScoped<LogUserActivity>();
+            services.Configure<CloudinarySettings>(this.Configuration.GetSection("CloudinarySettings"));
+            services.Configure<AuthenticationSettings>(this.Configuration.GetSection("AuthenticationSettings"));
+
+            services.AddAutoMapper(typeof(userRepository).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

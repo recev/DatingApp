@@ -11,6 +11,6 @@ namespace DatingApi.Data.Models
         public Boolean IsMain { get; set; }
         public string PublicId { get; set; }
         public User User { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

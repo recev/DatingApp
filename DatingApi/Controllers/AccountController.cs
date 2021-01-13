@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using DatingApi.Data.DataTransferObjects;
+using DatingApi.Data.OperationResults;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,30 +13,25 @@ namespace DatingApi.Controllers
     public class AccountController : ControllerBase
     {
         IAuthorization _authorization;
-        IUserManager _userManager;
+        IuserRepository _userRepository;
 
-        public AccountController(IAuthorization authorization, IUserManager userManager)
+        public AccountController(IAuthorization authorization, IuserRepository userRepository)
         {
             this._authorization = authorization;
-            this._userManager = userManager;
+            this._userRepository = userRepository;
         }
 
         [HttpPost("Register")]
-        public ActionResult Register(RegisterUser registerUser)
+        public async Task<IActionResult> Register(RegisterUser registerUser)
         {
-            if(_userManager.DoesUserExist(registerUser.Username))
+            if(_userRepository.DoesUserExist(registerUser.Username))
                 return BadRequest("User already exists");
 
-            var user = _authorization.CreateUser(registerUser.Username, registerUser.Password);
+            var result = await _userRepository.CreateUser(registerUser);
 
-            if(user == null)
-                BadRequest("User Cannot be created!");
-
-            var isUserCreated = _userManager.SaveUser(user);
-
-            if(isUserCreated)
+            if(result.IsSuccessful)
             {
-                var detailedUser = _userManager.GetUserDetails(registerUser.Username);
+                var detailedUser = _userRepository.GetUserDetailsByUserName(registerUser.Username);
                 return CreatedAtRoute("GetUser", new { Controller= "Users", id = detailedUser.Id }, detailedUser);
             }
             else
@@ -42,29 +39,31 @@ namespace DatingApi.Controllers
         }
 
         [HttpPost("Login")]
-        public ActionResult Login(LoginUser loginUser)
+        public async Task<IActionResult> Login(LoginUser loginUser)
         {
-            var user = _userManager.FindUser(loginUser.Username);
+            var loginResult = await _userRepository.Login(loginUser);
 
-            if(user == null)
-                return Unauthorized();
-
-            var IsValidUser = _authorization.AreCredentialsValid(user, loginUser.Password);
-
-            if(!IsValidUser)
-                return Unauthorized();
-
-            var token = _authorization.GenerateToken(user);
-
-            if(string.IsNullOrEmpty(token))
+            if (loginResult.IsSuccessful)
             {
-                return Unauthorized();
+                var userDetails = this._userRepository.GetUserDetailsByUserId(loginResult.loggedInUserId);
+                return Ok(new { Token = loginResult.Token, User = userDetails });
             }
             else
             {
-                var userDetails = this._userManager.GetUserDetails(user.Id);
-                return Ok(new { Token = token, User = userDetails });
+                return BadRequest(loginResult.Message);
             }
-        } 
+        }
+
+        [Authorize(Policy = "ModeratorPolicy")]
+        [HttpPost("editRole/{userName}")]
+        public async Task<IActionResult> EditRoles(string userName, RoleEdit roleEdit)
+        {
+            var result = await _userRepository.UpdateRolesAsync(userName, roleEdit);
+
+            if(result.IsSuccessful)
+                return Ok();
+            else
+                return BadRequest(result.Message);
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace DatingApi.Data.Repositories
             this._logger = logger;
         }
 
-        public PhotoForClient GetPhoto(int userId, int photoId)
+        public PhotoForClient GetPhoto(string userId, int photoId)
         {
             PhotoForClient clientPhoto = null;
             try
@@ -47,7 +47,7 @@ namespace DatingApi.Data.Repositories
             return clientPhoto;
         }
 
-        public Photo FindPhoto(int userId, int photoId)
+        public Photo FindPhoto(string userId, int photoId)
         {
             Photo photo = null;
             try
@@ -62,7 +62,7 @@ namespace DatingApi.Data.Repositories
             return photo;
         }
 
-        public UploadPhotoResult UploadPhoto(int userId, IFormFile file)
+        public UploadPhotoResult UploadPhoto(string userId, IFormFile file)
         {
             var result = new UploadPhotoResult();
             var uploadResult = UploadImageToCloudinary(userId, file);
@@ -110,7 +110,7 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        private bool IsMainPhoto(int userId)
+        private bool IsMainPhoto(string userId)
         {
             var isMainPhoto = true;
 
@@ -120,7 +120,7 @@ namespace DatingApi.Data.Repositories
             return isMainPhoto;
         }
 
-        private ImageUploadResult UploadImageToCloudinary(int userId, IFormFile imageFile)
+        private ImageUploadResult UploadImageToCloudinary(string userId, IFormFile imageFile)
         {
             ImageUploadResult uploadResult = null;
             try
@@ -176,7 +176,7 @@ namespace DatingApi.Data.Repositories
             return deletionResult;
         }
 
-        public OperationResult SetMainPhoto(int userId, int photoId)
+        public OperationResult SetMainPhoto(string userId, int photoId)
         {
             var result = new OperationResult();
 
@@ -219,7 +219,7 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        private Photo GetMainPhotoOfUser(int userId)
+        private Photo GetMainPhotoOfUser(string userId)
         {
             Photo photo = null;
 
@@ -236,7 +236,7 @@ namespace DatingApi.Data.Repositories
             return photo;
         }
 
-        public OperationResult DeletePhoto(int userId, int photoId)
+        public OperationResult DeletePhoto(string userId, int photoId)
         {
             var result = new OperationResult();
 

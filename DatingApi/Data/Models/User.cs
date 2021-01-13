@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace DatingApi.Data.Models
 {
-    public class User
+    public class User: IdentityUser
     {
-        public int Id { get; set; }
-        
         [Required]
         [MinLength(4)]
         [MaxLength(32)]
-        public string Username { get; set; }
         public string Gender { get; set; }
         public string Introduction { get; set; }
         public string LookingFor { get; set; }
@@ -22,12 +20,12 @@ namespace DatingApi.Data.Models
         public DateTime DateOfBirth { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
-        public byte[] PasswordHash { get; set; }
         public byte[] PasswordSaltKey { get; set; }
         public ICollection<Photo> Photos { get; set; }
         public ICollection<Like> SendedLikes { get; set; }
         public ICollection<Like> ReceivedLikes { get; set; }
         public ICollection<Message> SentMessages { get; set; }
         public ICollection<Message> ReceivedMessages { get; set; }
+        public ICollection<UserRole> UserRoles { get; set; }
     }
 }

@@ -8,6 +8,12 @@ using System.IdentityModel.Tokens.Jwt;
 using DatingApi.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Identity;
+using AutoMapper;
+using DatingApi.Data.DataTransferObjects;
+using System.Threading.Tasks;
+using DatingApi.Data.OperationResults;
+using System.Collections.Generic;
 
 namespace DatingApi.Data.Repositories
 {
@@ -15,21 +21,23 @@ namespace DatingApi.Data.Repositories
     {
         AuthenticationSettings _authenticationSettings;
         ILogger<Authorization> _logger;
+        IMapper _mapper;
 
-        public Authorization(IOptions<AuthenticationSettings> authenticationSettings, ILogger<Authorization> logger)
+        public Authorization(IOptions<AuthenticationSettings> authenticationSettings, ILogger<Authorization> logger, IMapper mapper)
         {
             this._authenticationSettings = authenticationSettings.Value;
             this._logger = logger;
+            this._mapper = mapper;
         }
 
-        public string GenerateToken(User user)
+        public string GenerateToken(User user, IList<string> userRoles)
         {
             var token = "";
             try
             {
                 var symmetricSecurityKey = GetSymmetricSecurityKey();
                 var signingCredentials = GetSigningCredentials(symmetricSecurityKey);
-                var claimsIdenty = GetClaimsIdentity(user);
+                var claimsIdenty = GetClaimsIdentity(user, userRoles);
                 var tokenDescriptor = GetSecurityTokenDescriptor(signingCredentials, claimsIdenty);
 
                 var tokenHandler = new JwtSecurityTokenHandler();
@@ -58,13 +66,20 @@ namespace DatingApi.Data.Repositories
             };
         }
 
-        private ClaimsIdentity GetClaimsIdentity(User user)
+        private ClaimsIdentity GetClaimsIdentity(User user, IList<string> userRoles)
         {
-            return new ClaimsIdentity(
-                            new Claim[]{
-                                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                                new Claim(ClaimTypes.Name, user.Username)
-                        });
+            var claims = new List<Claim>()
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.UserName)
+                };
+
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            return new ClaimsIdentity(claims);
         }
 
         private SymmetricSecurityKey GetSymmetricSecurityKey()
@@ -75,52 +90,5 @@ namespace DatingApi.Data.Repositories
             return symmetricSecurityKey;
         }
 
-        public bool AreCredentialsValid(User user, string password)
-        {
-            var result = false;
-            try
-            {
-                using (var hmac = new HMACSHA512(user.PasswordSaltKey))
-                {
-                    var passwordInBytes = System.Text.Encoding.UTF8.GetBytes(password);
-
-                    var passwordHash = hmac.ComputeHash(passwordInBytes);
-
-                    if (passwordHash.SequenceEqual(user.PasswordHash))
-                        result = true;
-                }   
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return result;
-        }
-
-        public User CreateUser(string username, string Password)
-        {
-            User user = null;
-            try
-            {
-                using (var hcmac = new HMACSHA512())
-                {
-                    var passwordInBytes = System.Text.Encoding.UTF8.GetBytes(Password);
-                    var passwordHash = hcmac.ComputeHash(passwordInBytes);
-                    
-                    user = new User {
-                        Username = username,
-                        PasswordSaltKey = hcmac.Key,
-                        PasswordHash = passwordHash
-                    };
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex.Message);
-            }
-
-            return user;
-        }
     }
 }

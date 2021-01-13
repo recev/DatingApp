@@ -18,9 +18,9 @@ namespace DatingApi.Data.Repositories
         ILogger<MessageRepository> _logger;
         DatingDbContext _context;
         IMapper _mapper;
-        IUserManager _userManager;
+        IuserRepository _userManager;
 
-        public MessageRepository(ILogger<MessageRepository> logger, DatingDbContext context, IMapper mapper, IUserManager userManager)
+        public MessageRepository(ILogger<MessageRepository> logger, DatingDbContext context, IMapper mapper, IuserRepository userManager)
         {
             this._logger = logger;
             this._context = context;
@@ -33,14 +33,14 @@ namespace DatingApi.Data.Repositories
             var result = new CreateMessageResult();
             try
             {
-                var senderUser = _userManager.FindUser(userMessage.SenderId);
+                var senderUser = _userManager.FindUserByUserId(userMessage.SenderId);
 
                 if(senderUser == null){
                     result.Message = "Sender can not be found!";
                     return result;
                 }
 
-                var RecipientUser = _userManager.FindUser(userMessage.RecipientId);
+                var RecipientUser = _userManager.FindUserByUserId(userMessage.RecipientId);
 
                 if(RecipientUser == null){
                     result.Message = "Recipient user can not be found!";
@@ -106,7 +106,7 @@ namespace DatingApi.Data.Repositories
             return messageDto;
         }
 
-        public IList<MessageDto> GetUnreadMessages(int userId)
+        public IList<MessageDto> GetUnreadMessages(string userId)
         {
             IList<MessageDto> messageList = null;
 
@@ -133,7 +133,7 @@ namespace DatingApi.Data.Repositories
             return messageList;
         }
 
-        public IList<MessageDto> GetInboxMessages(int userId)
+        public IList<MessageDto> GetInboxMessages(string userId)
         {
             IList<MessageDto> messageList = null;
 
@@ -159,7 +159,7 @@ namespace DatingApi.Data.Repositories
             return messageList;
         }
 
-        public IList<MessageDto> GetOutboxMessages(int userId)
+        public IList<MessageDto> GetOutboxMessages(string userId)
         {
             IList<MessageDto> messageList = null;
 
@@ -185,7 +185,7 @@ namespace DatingApi.Data.Repositories
             return messageList;
         }
 
-        public IList<MessageDto> GetMessageThread(int userId, int recipientId)
+        public IList<MessageDto> GetMessageThread(string userId, string recipientId)
         {
             IList<MessageDto> thread = null;
             try
@@ -226,7 +226,7 @@ namespace DatingApi.Data.Repositories
             return message;
         }
         
-        public OperationResult DeleteMessage(int userId, int messageId)
+        public OperationResult DeleteMessage(string userId, int messageId)
         {
             OperationResult result = new OperationResult();
 
@@ -261,7 +261,7 @@ namespace DatingApi.Data.Repositories
             return result;
         }
 
-        public OperationResult MarkAsRead(int userId, int messageId)
+        public OperationResult MarkAsRead(string userId, int messageId)
         {
             var result = new OperationResult();
 

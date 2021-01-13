@@ -14,27 +14,29 @@ namespace DatingApp.API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class UsersController: ControllerBase
     {
-        IUserManager _userManager;
+        IuserRepository _userManager;
 
-        public int CurrentUserId {
+        public string CurrentUserId {
             get {
                 var NameIdentifierClaim = User.Claims
                     .Where(c => c.Type == ClaimTypes.NameIdentifier)
                     .FirstOrDefault();
                     
-                return int.Parse(NameIdentifierClaim.Value);
+                return NameIdentifierClaim.Value;
             }
         }
 
-        public UsersController(IUserManager userManager)
+        public UsersController(IuserRepository userManager)
         {
             this._userManager = userManager;
         }
 
         [HttpGet("{id}", Name="GetUser")]
-        public ActionResult GetUser(int id)
+        // [Authorize(Roles = "Member")]
+        [Authorize(Policy = "MemberPolicy")]
+        public ActionResult GetUser(string id)
         {
-            var user = _userManager.GetUserDetails(id);
+            var user = _userManager.GetUserDetailsByUserId(id);
             
             if(user == null)
                 return BadRequest("user not found!");
@@ -57,6 +59,8 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet("UserList")]
+        // [Authorize(Roles = "Admin")]
+        [Authorize(Policy = "ModeratorPolicy")]
         public ActionResult GetUserList([FromQuery] SearchUser searchUser)
         {
             return Ok(_userManager.GetUserList(searchUser));
