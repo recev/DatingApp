@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using System.Security.Claims;
-using DatingApi.Data.DataTransferObjects;
 using DatingApi.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +8,6 @@ using Microsoft.AspNetCore.Http;
 namespace DatingApi.Controllers
 {
     [Route("api/users/{userId}/[controller]")]
-    [Authorize]
     [ApiController]
     public class PhotosController: ControllerBase
     {

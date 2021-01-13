@@ -8,7 +8,6 @@ namespace DatingApi.Controllers
 {
     [Route("api/likes/{userId}")]
     [ApiController]
-    [Authorize]
     public class LikesController: ControllerBase
     {
         IuserRepository _userManager;

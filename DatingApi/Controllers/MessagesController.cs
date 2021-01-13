@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace DatingApi.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/users/{userID}/[controller]")]
     public class MessagesController: ControllerBase
     {

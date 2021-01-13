@@ -18,6 +18,8 @@ using DatingApi.Data.Repositories;
 using DatingApi.Settings;
 using DatingApi.Filters;
 using DatingApi.Data.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace DatingApi
 {
@@ -78,7 +80,13 @@ namespace DatingApi
                 options.AddPolicy("ModeratorPolicy", policy => policy.RequireRole("Admin", "Moderator"));
             });
 
-            services.AddControllers();
+            services.AddControllers(options => {
+                var policy = new AuthorizationPolicyBuilder()
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddControllers().AddNewtonsoftJson(setup => {
                 setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
