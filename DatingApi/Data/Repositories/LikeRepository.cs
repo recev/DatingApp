@@ -14,10 +14,10 @@ namespace DatingApi.Data.Repositories
     {
         ILogger<LikeRepository> _logger;
         DatingDbContext _context;
-        IuserRepository _userManager;
+        IUserRepository _userManager;
         IMapper _mapper;
 
-        public LikeRepository(DatingDbContext context, ILogger<LikeRepository> logger, IuserRepository userManager, IMapper mapper)
+        public LikeRepository(DatingDbContext context, ILogger<LikeRepository> logger, IUserRepository userManager, IMapper mapper)
         {
             this._context = context;
             this._logger = logger;

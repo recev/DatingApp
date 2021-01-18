@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using DatingApi.Filters;
 using System.Threading.Tasks;
-using DatingApi.Data.OperationResults;
-
 namespace DatingApp.API.Controllers
 {
     [Route("api/[controller]")]
@@ -15,7 +13,7 @@ namespace DatingApp.API.Controllers
     [ServiceFilter(typeof(LogUserActivity))]
     public class UsersController: ControllerBase
     {
-        IuserRepository _userRepository;
+        IUserRepository _userRepository;
 
         public string CurrentUserId {
             get {
@@ -27,7 +25,7 @@ namespace DatingApp.API.Controllers
             }
         }
 
-        public UsersController(IuserRepository userManager)
+        public UsersController(IUserRepository userManager)
         {
             this._userRepository = userManager;
         }

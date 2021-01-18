@@ -91,7 +91,7 @@ namespace DatingApi
                 setup.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             services.AddScoped<IAuthorization, Authorization>();
-            services.AddScoped<IuserRepository, userRepository>();
+            services.AddScoped<IUserRepository, userRepository>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<ILikeRepository, LikeRepository>();
             services.AddScoped<ImessageRepository, MessageRepository>(); 

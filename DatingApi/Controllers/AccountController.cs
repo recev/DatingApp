@@ -13,9 +13,9 @@ namespace DatingApi.Controllers
     public class AccountController : ControllerBase
     {
         IAuthorization _authorization;
-        IuserRepository _userRepository;
+        IUserRepository _userRepository;
 
-        public AccountController(IAuthorization authorization, IuserRepository userRepository)
+        public AccountController(IAuthorization authorization, IUserRepository userRepository)
         {
             this._authorization = authorization;
             this._userRepository = userRepository;

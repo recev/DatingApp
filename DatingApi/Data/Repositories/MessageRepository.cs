@@ -18,9 +18,9 @@ namespace DatingApi.Data.Repositories
         ILogger<MessageRepository> _logger;
         DatingDbContext _context;
         IMapper _mapper;
-        IuserRepository _userManager;
+        IUserRepository _userManager;
 
-        public MessageRepository(ILogger<MessageRepository> logger, DatingDbContext context, IMapper mapper, IuserRepository userManager)
+        public MessageRepository(ILogger<MessageRepository> logger, DatingDbContext context, IMapper mapper, IUserRepository userManager)
         {
             this._logger = logger;
             this._context = context;

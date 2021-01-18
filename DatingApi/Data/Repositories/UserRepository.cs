@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DatingApi.Data.Repositories
 {
-    public class userRepository : IuserRepository
+    public class userRepository : IUserRepository
     {
         DatingDbContext _context;
         IMapper _mapper;

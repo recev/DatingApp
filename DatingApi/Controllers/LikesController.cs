@@ -10,7 +10,7 @@ namespace DatingApi.Controllers
     [ApiController]
     public class LikesController: ControllerBase
     {
-        IuserRepository _userManager;
+        IUserRepository _userManager;
         ILikeRepository _likeRepository;
 
         public string CurrentUserId {
@@ -23,7 +23,7 @@ namespace DatingApi.Controllers
             }
         }
 
-        public LikesController(IuserRepository userManager, ILikeRepository likeRepository)
+        public LikesController(IUserRepository userManager, ILikeRepository likeRepository)
         {
             this._userManager = userManager;
             this._likeRepository = likeRepository;

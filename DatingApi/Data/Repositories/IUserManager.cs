@@ -6,7 +6,7 @@ using DatingApi.Data.OperationResults;
 
 namespace DatingApi.Data.Repositories
 {
-    public interface IuserRepository
+    public interface IUserRepository
     {   
         DetailedUser GetUserDetailsByUserId(string id);
         DetailedUser GetUserDetailsByUserName(string username);
