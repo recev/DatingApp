@@ -20,7 +20,7 @@ export class MemberCardComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  likeUser(receiverId: number){
+  likeUser(receiverId: string){
     this.likeService.likeUser(receiverId)
       .subscribe(
         v => this.toastr.success('User liked successfully!', v),

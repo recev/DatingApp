@@ -1,12 +1,7 @@
-export class CompactUser
+import { User } from './user';
+
+export class CompactUser extends User
 {
-    id: number;
-    username: string;
-    password: string;
-    gender: string;
-    city: string;
-    country: string;
-    knownAs: string;
     age: number;
     created: Date;
     lastActive: Date;

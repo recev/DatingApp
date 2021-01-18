@@ -46,24 +46,12 @@ namespace DatingApi.Controllers
             if (loginResult.IsSuccessful)
             {
                 var userDetails = this._userRepository.GetUserDetailsByUserId(loginResult.loggedInUserId);
-                return Ok(new { Token = loginResult.Token, User = userDetails });
+                return Ok(new { Token = loginResult.Value, User = userDetails });
             }
             else
             {
                 return BadRequest(loginResult.Message);
             }
-        }
-
-        [Authorize(Policy = "ModeratorPolicy")]
-        [HttpPost("editRole/{userName}")]
-        public async Task<IActionResult> EditRoles(string userName, RoleEdit roleEdit)
-        {
-            var result = await _userRepository.UpdateRolesAsync(userName, roleEdit);
-
-            if(result.IsSuccessful)
-                return Ok();
-            else
-                return BadRequest(result.Message);
         }
     }
 }

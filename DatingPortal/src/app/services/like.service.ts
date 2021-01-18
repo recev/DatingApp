@@ -11,7 +11,7 @@ export class LikeService {
 
   constructor(private authorizationService: AuthorizationService, private httpClient: HttpClient) { }
 
-  likeUser(receiverId: number){
+  likeUser(receiverId: string){
     const url = environment.baseUrl + 'likes/' + this.authorizationService.loggedInUserId() + '/' + receiverId;
     return this.httpClient.post<string>(url, {});
   }

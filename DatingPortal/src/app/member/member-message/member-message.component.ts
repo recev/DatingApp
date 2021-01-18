@@ -12,7 +12,7 @@ import { MessageService } from 'src/app/services/message.service';
 export class MemberMessageComponent implements OnInit, OnChanges {
   messages: Message[];
   messageContent: string;
-  @Input() recipient = 0;
+  @Input() recipient = '';
 
   constructor(private messageService: MessageService, private toastr: ToastrService) { }
 

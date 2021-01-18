@@ -6,5 +6,5 @@ export class Photo
     addedDate: Date;
     isMain: boolean;
     publicId: string;
-    userId: number;
+    userId: string;
 }

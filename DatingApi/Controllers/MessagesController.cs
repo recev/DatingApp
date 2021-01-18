@@ -56,9 +56,9 @@ namespace DatingApi.Controllers
             var result = _messageRepository.CreateMessage(userMessage);
 
             if(result.IsSuccessful)
-                return CreatedAtRoute("GetMessage", new { UserId = userId, MessageId = result.CreatedMessage.Id }, result.CreatedMessage);
+                return CreatedAtRoute("GetMessage", new { UserId = userId, MessageId = result.Value.Id }, result.Value);
             else
-                return BadRequest(result.CreatedMessage);
+                return BadRequest(result.Value);
         }
 
         [HttpGet("unread")]

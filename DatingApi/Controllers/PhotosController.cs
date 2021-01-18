@@ -57,7 +57,7 @@ namespace DatingApi.Controllers
             var result = _photoRepository.UploadPhoto(userId, file);
 
             if(result.IsSuccessful)
-                return CreatedAtRoute("GetPhoto", new {userId = CurrentUserId, photoId=result.Photo.Id }, result.Photo);
+                return CreatedAtRoute("GetPhoto", new {userId = CurrentUserId, photoId=result.Value.Id }, result.Value);
             else
                 return BadRequest(result.Message);
         }

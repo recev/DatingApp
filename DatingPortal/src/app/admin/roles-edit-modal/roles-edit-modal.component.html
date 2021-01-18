@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{user.knownAs}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="closeModal()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+<!--
+
+  don't forget to put formArrayName = "roles", it specifies the array
+  [formControlName]= "i" specifies the name of the control in it!
+
+ -->
+  <form [formGroup]="rolesForm" (ngSubmit)="saveRoles()">
+    <div
+      *ngFor="let role of rolesFormArray.controls; let i = index"
+      formArrayName = "roles"
+      class="form-check">
+      <label class="form-check-label">
+        <input
+          [formControlName]= "i"
+          type="checkbox"
+          class="form-check-input">
+          {{availableRoles[i].name}}
+      </label>
+    </div>
+  </form>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="closeModal()">Close</button>
+  <button type="button" class="btn btn-default" (click)="saveRoles()">Save</button>
+</div>

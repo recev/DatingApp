@@ -3,6 +3,7 @@ import { HttpClient, HttpParams} from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { DetailedUser } from '../models/detailed-user';
 import { PaginatedUserList } from '../models/paginated-user-list';
+import { UserWithRole } from '../models/user-with-role';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,15 @@ export class UserService {
     .set('orderBy', orderBy);
 
     return this.httpClient.get<PaginatedUserList>(environment.baseUrl + 'users/UserList', { params });
+  }
+
+  getAllUsersWithRoles(){
+    return this.httpClient.get<UserWithRole[]>(environment.baseUrl + 'users/UserRoles');
+  }
+
+  updateUserRoles(userName: string, roles: string[]){
+    console.log('roles', roles);
+    return this.httpClient.post(environment.baseUrl + 'users/editRole/' + userName, {roles});
   }
 
   getUser(id: string)

@@ -27,13 +27,13 @@ constructor(private httpClient: HttpClient, private authorizationService: Author
     return this.httpClient.get<Message[]>(url);
   }
 
-  getMessageThread(recipientId: number)
+  getMessageThread(recipientId: string)
   {
     const url = environment.baseUrl + 'users/' + this.authorizationService.loggedInUserId() + '/messages/thread/' + recipientId;
     return this.httpClient.get<Message[]>(url);
   }
 
-  sendMessage(recipientId: number, content: string){
+  sendMessage(recipientId: string, content: string){
     const url = environment.baseUrl + 'users/' + this.authorizationService.loggedInUserId() + '/messages';
 
     const messageForCreation: MessageForCreation = {

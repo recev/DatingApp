@@ -8,7 +8,7 @@ namespace DatingApi.Data.Repositories
     public interface ImessageRepository
     {
         MessageDto GetDetailedMessage(int messageId);
-        CreateMessageResult CreateMessage(UserMessage userMessage);
+        OperationResult<MessageDto> CreateMessage(UserMessage userMessage);
         IList<MessageDto> GetUnreadMessages(string userId);
         IList<MessageDto> GetInboxMessages(string userId);
         IList<MessageDto> GetOutboxMessages(string userId);

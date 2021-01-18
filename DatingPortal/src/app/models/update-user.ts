@@ -1,10 +1,8 @@
-export class UpdateUser
+import { User } from './user';
+
+export class UpdateUser extends User
 {
-    Id: number;
-    Username: string;
-    Introduction: string;
-    LookingFor: string;
-    Interests: string;
-    City: string;
-    Country: string;
+    introduction: string;
+    lookingFor: string;
+    interests: string;
 }

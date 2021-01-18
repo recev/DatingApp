@@ -12,6 +12,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxGalleryModule } from 'ngx-gallery-9';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -32,11 +33,16 @@ import { MemberCardComponent } from './member/member-card/member-card.component'
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { MemberMessageComponent } from './member/member-message/member-message.component';
 import { PhotoEditorComponent } from './member/photo-editor/photo-editor.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
+import { UserManagementComponent } from './admin/user-management/user-management.component';
+import { PhotoManagementComponent } from './admin/photo-management/photo-management.component';
+import { HasRoleDirective } from './directives/has-role.directive';
 
 // services
 import { ErrorInterceptorProvider } from './services/error.interceptor';
 import { appRoutes } from './routes';
 import { environment } from 'src/environments/environment';
+import { RolesEditModalComponent } from './admin/roles-edit-modal/roles-edit-modal.component';
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -55,7 +61,12 @@ export function tokenGetter() {
     MemberCardComponent,
     MemberEditComponent,
     MemberMessageComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    AdminPanelComponent,
+    UserManagementComponent,
+    PhotoManagementComponent,
+    HasRoleDirective,
+    RolesEditModalComponent
   ],
   imports: [
     BrowserModule,
@@ -73,6 +84,7 @@ export function tokenGetter() {
     PaginationModule.forRoot(),
     ButtonsModule.forRoot(),
     TabsModule.forRoot(),
+    ModalModule.forRoot(),
     ToastrModule.forRoot(),
     JwtModule.forRoot({
       config: {

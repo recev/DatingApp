@@ -1,10 +1,7 @@
 namespace DatingApi.Data.OperationResults
 {
-    public class LoginResult
+    public class LoginResult: OperationResult<string>
     {
-        public bool IsSuccessful { get; set; }   
-        public string Message { get; set; }
-        public string Token { get; set; }
         public string loggedInUserId { get; set; }
     }
 }

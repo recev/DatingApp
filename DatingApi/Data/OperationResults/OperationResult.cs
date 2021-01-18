@@ -1,8 +1,6 @@
 namespace DatingApi.Data.OperationResults
 {
-    public class OperationResult
+    public class OperationResult: OperationResult<string>
     {
-        public bool IsSuccessful { get; set; }   
-        public string Message { get; set; }
     }
 }

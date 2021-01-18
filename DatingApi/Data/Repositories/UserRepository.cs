@@ -311,7 +311,7 @@ namespace DatingApi.Data.Repositories
                     }
                     else
                     {
-                        result.Token = token;
+                        result.Value = token;
                         result.IsSuccessful = true;
                         result.loggedInUserId = user.Id;
                     }
@@ -351,7 +351,7 @@ namespace DatingApi.Data.Repositories
 
                 await _userManager.AddToRolesAsync(user, newRoles);
                 await _userManager.RemoveFromRolesAsync(user, deletedRoles);
-
+                result.IsSuccessful = true;
             }
             catch (Exception ex)
             {
@@ -361,5 +361,29 @@ namespace DatingApi.Data.Repositories
 
             return result;
         }
+
+        public OperationResult<IList<UserRoleDto>> GetUserRoles()
+        {
+            var result = new OperationResult<IList<UserRoleDto>>();
+
+            try
+            {
+                var userRoles = _context.Users
+                    .Include(user => user.UserRoles)
+                    .ThenInclude(role => role.Role)
+                    .ToList();
+
+                result.Value = _mapper.Map<IList<UserRoleDto>>(userRoles);
+                result.IsSuccessful = true;
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
+
     }
 }

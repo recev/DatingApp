@@ -28,9 +28,9 @@ namespace DatingApi.Data.Repositories
             this._userManager = userManager;
         }
 
-        public CreateMessageResult CreateMessage(UserMessage userMessage)
+        public OperationResult<MessageDto> CreateMessage(UserMessage userMessage)
         {
-            var result = new CreateMessageResult();
+            var result = new OperationResult<MessageDto>();
             try
             {
                 var senderUser = _userManager.FindUserByUserId(userMessage.SenderId);
@@ -54,7 +54,7 @@ namespace DatingApi.Data.Repositories
                 if(result.IsSuccessful)
                 {
                     var savedMessage = GetDetailedMessage(message.Id);
-                    result.CreatedMessage = _mapper.Map<MessageDto>(savedMessage);
+                    result.Value = _mapper.Map<MessageDto>(savedMessage);
                 }
             }
             catch (System.Exception ex)

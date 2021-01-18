@@ -57,10 +57,36 @@ export class AuthorizationService {
     return user;
   }
 
+  isUserAuthorized(allowedRoles: Array<string>): boolean{
+
+    let isUserAuthorized = false;
+
+    if (!allowedRoles){
+      return isUserAuthorized;
+    }
+
+    const userRoles = this.getUserRoles();
+
+    allowedRoles.forEach(allowedRole => {
+      if (userRoles.includes(allowedRole)){
+        isUserAuthorized = true;
+        return;
+      }
+    });
+
+    return isUserAuthorized;
+  }
+
   getUserPhotos()
   {
     const user = JSON.parse(localStorage.getItem('user')) as DetailedUser;
     return user.photos;
+  }
+
+  getUserRoles()
+  {
+    const user = JSON.parse(localStorage.getItem('user')) as DetailedUser;
+    return user.roles;
   }
 
   updateUserMainPhoto(photo: Photo)

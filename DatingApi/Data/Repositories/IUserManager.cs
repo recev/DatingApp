@@ -21,5 +21,6 @@ namespace DatingApi.Data.Repositories
         bool UpdateLastActive(string userId);
         Task<LoginResult> Login(LoginUser loginUser);
         Task<OperationResult> UpdateRolesAsync(string userName, RoleEdit roleEdit);
+        OperationResult<IList<UserRoleDto>> GetUserRoles();
     }
 }

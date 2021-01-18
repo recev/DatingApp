@@ -1,5 +1,5 @@
 export class MessageForCreation {
-  SenderId: number;
-  RecipientId: number;
+  SenderId: string;
+  RecipientId: string;
   Content: string;
 }

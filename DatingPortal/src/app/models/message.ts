@@ -1,11 +1,11 @@
 export class Message {
   id: number;
 
-  senderId: number;
+  senderId: string;
   senderKnownAs: string;
   senderPhotoUrl: string;
 
-  recipientId: number;
+  recipientId: string;
   recipientKnownAs: string;
   recipientPhotoUrl: string;
 

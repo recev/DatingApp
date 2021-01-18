@@ -8,6 +8,7 @@ import { AuthorizationGuard } from './guards/authorization.guard';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MemberEditComponent } from './member/member-edit/member-edit.component';
 import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 export let appRoutes: Routes = [
   { path : '', component : NotFoundComponent},
@@ -22,6 +23,7 @@ export let appRoutes: Routes = [
       { path : 'member-edit', component: MemberEditComponent, canDeactivate: [UnsavedChangesGuard]},
       { path : 'messages', component: MessagesComponent},
       { path : 'list', component : ListComponent},
+      { path : 'admin', component: AdminPanelComponent, data: { roles: ['Admin', 'Moderator']}},
       { path : '**', component : NotFoundComponent}
     ]
   }

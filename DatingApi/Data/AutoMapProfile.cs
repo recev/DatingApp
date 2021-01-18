@@ -49,6 +49,12 @@ namespace DatingApi.Data
 
             CreateMap<UpdateUser, User>();
 
+            CreateMap<User, UserRoleDto>()
+                .ForMember(user => user.Roles,
+                    conf => conf.MapFrom(userRole =>
+                                userRole.UserRoles.Select(ur => ur.Role))
+                );
+
             CreateMap<Message, MessageDto>()
             .ForMember(
                 p => p.SenderPhotoUrl, 

@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
 namespace DatingApi.Data.Repositories
 {
@@ -62,9 +63,9 @@ namespace DatingApi.Data.Repositories
             return photo;
         }
 
-        public UploadPhotoResult UploadPhoto(string userId, IFormFile file)
+        public OperationResult<PhotoForClient> UploadPhoto(string userId, IFormFile file)
         {
-            var result = new UploadPhotoResult();
+            var result = new OperationResult<PhotoForClient>();
             var uploadResult = UploadImageToCloudinary(userId, file);
 
             if (uploadResult.StatusCode != System.Net.HttpStatusCode.OK)
@@ -87,7 +88,7 @@ namespace DatingApi.Data.Repositories
             if (SavePhoto(newPhoto))
             {
                 result.IsSuccessful = true;
-                result.Photo = _mapper.Map<PhotoForClient>(newPhoto);
+                result.Value = _mapper.Map<PhotoForClient>(newPhoto);
             }
 
             return result;
