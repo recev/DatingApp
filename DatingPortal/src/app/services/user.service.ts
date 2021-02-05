@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { DetailedUser } from '../models/detailed-user';
 import { PaginatedUserList } from '../models/paginated-user-list';
 import { UserWithRole } from '../models/user-with-role';
+import { PhotoForUser } from '../models/photoForUser';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,20 @@ export class UserService {
 
   getAllUsersWithRoles(){
     return this.httpClient.get<UserWithRole[]>(environment.baseUrl + 'users/UserRoles');
+  }
+
+  getUnapprovedUserPhotos(){
+    return this.httpClient.get<PhotoForUser[]>(environment.baseUrl + 'users/UnapprovedUserPhotos');
+  }
+
+  approveUserPhoto(photo: PhotoForUser){
+
+    return this.httpClient.post(environment.baseUrl + 'users/ApproveUserPhotos', photo);
+  }
+
+  rejectUserPhoto(photo: PhotoForUser){
+
+    return this.httpClient.post(environment.baseUrl + 'users/RejectUserPhoto', photo);
   }
 
   updateUserRoles(userName: string, roles: string[]){

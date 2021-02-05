@@ -12,5 +12,6 @@ namespace DatingApi.Data.Models
         public string PublicId { get; set; }
         public User User { get; set; }
         public string UserId { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

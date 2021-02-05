@@ -11,5 +11,6 @@ namespace DatingApi.Data.DataTransferObjects
         public Boolean IsMain { get; set; }
         public string PublicId { get; set; }
         public string UserId { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

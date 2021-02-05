@@ -32,6 +32,38 @@ namespace DatingApi.Data.Repositories
             this._logger = logger;
         }
 
+        public OperationResult<IList<PhotoForUser>> GetUnapprovedUserPhotos()
+        {
+            var result = new OperationResult<IList<PhotoForUser>>();
+
+            try
+            {
+                var unapprovedPhotos = _context.Users
+                .Join(_context.Photos,
+                u => u.Id,
+                p => p.UserId, 
+                (u, p) => new PhotoForUser {
+                    UserId = u.Id,
+                    Username = u.UserName,
+                    KnownAs = u.KnownAs,
+                    PhotoId = p.Id,
+                    Url = p.Url,
+                    PublicId = p.PublicId,
+                    IsApproved = p.IsApproved
+                })
+                .Where(p => p.IsApproved == false);
+                
+                result.Value = unapprovedPhotos.ToList();
+                result.IsSuccessful = true;
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
         public PhotoForClient GetPhoto(string userId, int photoId)
         {
             PhotoForClient clientPhoto = null;
@@ -257,7 +289,7 @@ namespace DatingApi.Data.Repositories
 
             var deletionResult = DeleteImageFromCloudinary(dbPhoto.PublicId);
 
-            if (deletionResult.StatusCode != HttpStatusCode.OK)
+            if (deletionResult == null || deletionResult.StatusCode != HttpStatusCode.OK)
             {
                 result.Message = "Image can not be deleted!";
                 return result;
@@ -287,6 +319,28 @@ namespace DatingApi.Data.Repositories
             }
             catch (System.Exception ex)
             {
+                _logger.LogError(ex.Message);
+            }
+
+            return result;
+        }
+
+        public OperationResult<string> ApprovePhoto(PhotoForUser photo)
+        {
+            var result = new OperationResult<string>();
+
+            try
+            {
+                var dbPhoto = FindPhoto(photo.UserId, photo.PhotoId);
+
+                dbPhoto.IsApproved = true;
+                _context.SaveChanges();
+                
+                result.IsSuccessful = true;
+            }
+            catch (System.Exception ex)
+            {
+                result.Message = ex.Message;
                 _logger.LogError(ex.Message);
             }
 

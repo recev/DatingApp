@@ -7,4 +7,5 @@ export class Photo
     isMain: boolean;
     publicId: string;
     userId: string;
+    isApproved: boolean;
 }

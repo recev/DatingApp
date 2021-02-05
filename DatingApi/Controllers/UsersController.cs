@@ -14,6 +14,7 @@ namespace DatingApp.API.Controllers
     public class UsersController: ControllerBase
     {
         IUserRepository _userRepository;
+        IPhotoRepository _photoRepository;
 
         public string CurrentUserId {
             get {
@@ -25,9 +26,10 @@ namespace DatingApp.API.Controllers
             }
         }
 
-        public UsersController(IUserRepository userManager)
+        public UsersController(IUserRepository userManager, IPhotoRepository photoRepository)
         {
             this._userRepository = userManager;
+            this._photoRepository = photoRepository;
         }
 
         [HttpGet("{id}", Name="GetUser")]
@@ -77,7 +79,6 @@ namespace DatingApp.API.Controllers
                 return BadRequest(result.Message);
         }
 
-
         [Authorize(Policy = "ModeratorPolicy")]
         [HttpPost("editRole/{userName}")]
         public async Task<IActionResult> EditRoles(string userName, RoleEdit roleEdit)
@@ -89,5 +90,42 @@ namespace DatingApp.API.Controllers
             else
                 return BadRequest(result.Message);
         }
+
+        [HttpGet("UnapprovedUserPhotos")]
+        [Authorize(Policy = "ModeratorPolicy")]
+        public IActionResult GetUnapprovedUserPhotos()
+        {
+            var result = _photoRepository.GetUnapprovedUserPhotos();
+
+            if(result.IsSuccessful)
+                return Ok(result.Value);
+            else
+                return BadRequest(result.Message);
+        }
+
+        [HttpPost("ApproveUserPhotos")]
+        [Authorize(Policy = "ModeratorPolicy")]
+        public IActionResult ApproveUserPhotos(PhotoForUser photo)
+        {
+            var result = _photoRepository.ApprovePhoto(photo);
+
+            if(result.IsSuccessful)
+                return Ok(result.Value);
+            else
+                return BadRequest(result.Message);
+        }
+
+        [HttpPost("RejectUserPhoto")]
+        [Authorize(Policy = "ModeratorPolicy")]
+        public IActionResult RejectUserPhoto(PhotoForUser photo)
+        {
+            var result = _photoRepository.DeletePhoto(photo.UserId, photo.PhotoId);
+
+            if(result.IsSuccessful)
+                return Ok(result.Value);
+            else
+                return BadRequest(result.Message);
+        }
+
     }
 }

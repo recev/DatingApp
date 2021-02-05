@@ -17,6 +17,19 @@
         </button>
       </div>
     </div>
+    <h4 class="text-danger">Photos waiting for approval</h4>
+    <div class="row p-2">
+      <div class="col-sm-4 p-3" *ngFor="let photo of unApprovedPhotos">
+        <img class="img-thumbnail" src="{{photo.url}}">
+        <button
+          class="btn btn-danger"
+          (click) ="deleteUnApprovedPhoto(photo)"
+          [disabled] ="photo.isMain">
+          Delete
+        </button>
+      </div>
+
+    </div>
 
     <div class="row">
 

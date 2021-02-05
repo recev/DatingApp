@@ -11,5 +11,7 @@ namespace DatingApi.Data.Repositories
         OperationResult<PhotoForClient> UploadPhoto(string userId, IFormFile imageFile);
         OperationResult SetMainPhoto(string userId, int photoId);
         OperationResult DeletePhoto(string userId, int photoId);
+        OperationResult<IList<PhotoForUser>> GetUnapprovedUserPhotos();
+        OperationResult<string> ApprovePhoto(PhotoForUser photo);
     }
 }

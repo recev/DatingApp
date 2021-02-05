@@ -16,7 +16,8 @@
         "Url": "https://randomuser.me/api/portraits/women/35.jpg",
         "Description": "Officia dolor est elit cillum laboris ipsum ad elit consequat amet ipsum commodo officia.",
         "AddedDate": "2020-08-21",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -37,7 +38,8 @@
         "Url": "https://randomuser.me/api/portraits/women/81.jpg",
         "Description": "Aliqua elit velit velit aute duis nulla.",
         "AddedDate": "2020-08-15",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -58,7 +60,8 @@
         "Url": "https://randomuser.me/api/portraits/women/16.jpg",
         "Description": "Est fugiat et in consectetur cillum fugiat ex do anim do mollit aliqua eiusmod officia.",
         "AddedDate": "2020-08-29",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -79,7 +82,8 @@
         "Url": "https://randomuser.me/api/portraits/women/6.jpg",
         "Description": "Nulla consequat enim ad in enim esse Lorem consequat eu esse consectetur.",
         "AddedDate": "2020-08-27",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -100,7 +104,8 @@
         "Url": "https://randomuser.me/api/portraits/women/13.jpg",
         "Description": "Tempor aliquip incididunt minim occaecat et sit occaecat exercitation anim nisi.",
         "AddedDate": "2020-08-21",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -121,7 +126,8 @@
         "Url": "https://randomuser.me/api/portraits/women/56.jpg",
         "Description": "Mollit dolor non aute laborum commodo ea laborum non aliquip nisi.",
         "AddedDate": "2020-08-14",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -142,7 +148,8 @@
         "Url": "https://randomuser.me/api/portraits/women/63.jpg",
         "Description": "Nostrud deserunt excepteur dolore ut veniam laborum minim proident magna.",
         "AddedDate": "2020-08-14",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -163,7 +170,8 @@
         "Url": "https://randomuser.me/api/portraits/women/78.jpg",
         "Description": "Reprehenderit eu proident enim culpa non enim aliqua cillum.",
         "AddedDate": "2020-08-18",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -184,7 +192,8 @@
         "Url": "https://randomuser.me/api/portraits/women/53.jpg",
         "Description": "Qui ipsum dolore tempor tempor.",
         "AddedDate": "2020-08-06",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -205,7 +214,8 @@
         "Url": "https://randomuser.me/api/portraits/women/45.jpg",
         "Description": "Laborum ad cupidatat ea ipsum consectetur dolor ea aliqua in esse duis amet magna occaecat.",
         "AddedDate": "2020-08-23",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -226,7 +236,8 @@
         "Url": "https://randomuser.me/api/portraits/women/46.jpg",
         "Description": "Irure non amet in sunt enim commodo reprehenderit qui.",
         "AddedDate": "2020-08-15",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -247,7 +258,8 @@
         "Url": "https://randomuser.me/api/portraits/women/9.jpg",
         "Description": "Quis do in excepteur irure aliqua id reprehenderit mollit.",
         "AddedDate": "2020-08-08",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -268,7 +280,8 @@
         "Url": "https://randomuser.me/api/portraits/women/37.jpg",
         "Description": "Laborum duis voluptate Lorem aliquip in occaecat labore deserunt est velit minim est veniam do.",
         "AddedDate": "2020-08-06",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -289,7 +302,8 @@
         "Url": "https://randomuser.me/api/portraits/women/23.jpg",
         "Description": "Nulla id pariatur aliquip Lorem amet mollit consectetur nulla voluptate magna aliqua mollit ipsum consequat.",
         "AddedDate": "2020-08-22",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -310,7 +324,8 @@
         "Url": "https://randomuser.me/api/portraits/women/57.jpg",
         "Description": "Lorem deserunt ad ipsum pariatur.",
         "AddedDate": "2020-08-20",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -331,7 +346,8 @@
         "Url": "https://randomuser.me/api/portraits/women/89.jpg",
         "Description": "Enim minim mollit reprehenderit cupidatat.",
         "AddedDate": "2020-08-14",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -352,7 +368,8 @@
         "Url": "https://randomuser.me/api/portraits/women/39.jpg",
         "Description": "Nostrud occaecat quis tempor elit eiusmod enim eiusmod duis ea.",
         "AddedDate": "2020-08-13",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -373,7 +390,8 @@
         "Url": "https://randomuser.me/api/portraits/men/11.jpg",
         "Description": "Magna exercitation occaecat sint in dolor est exercitation laboris consequat laboris ut dolore.",
         "AddedDate": "2020-08-29",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -394,7 +412,8 @@
         "Url": "https://randomuser.me/api/portraits/men/63.jpg",
         "Description": "In ullamco id ad do.",
         "AddedDate": "2020-08-29",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -415,7 +434,8 @@
         "Url": "https://randomuser.me/api/portraits/men/66.jpg",
         "Description": "Culpa duis sint cupidatat adipisicing ipsum incididunt occaecat.",
         "AddedDate": "2020-08-28",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -436,7 +456,8 @@
         "Url": "https://randomuser.me/api/portraits/men/95.jpg",
         "Description": "Officia quis esse consequat amet nisi enim tempor laboris amet.",
         "AddedDate": "2020-08-11",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -457,7 +478,8 @@
         "Url": "https://randomuser.me/api/portraits/men/12.jpg",
         "Description": "Enim non est do laboris cillum sint cillum ad.",
         "AddedDate": "2020-08-12",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -478,7 +500,8 @@
         "Url": "https://randomuser.me/api/portraits/men/11.jpg",
         "Description": "In amet magna velit consectetur duis amet esse pariatur ipsum dolore adipisicing elit eiusmod ad.",
         "AddedDate": "2020-08-11",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -499,7 +522,8 @@
         "Url": "https://randomuser.me/api/portraits/men/78.jpg",
         "Description": "Veniam proident eiusmod laboris excepteur aliqua.",
         "AddedDate": "2020-08-01",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -520,7 +544,8 @@
         "Url": "https://randomuser.me/api/portraits/men/37.jpg",
         "Description": "Ad ipsum esse veniam qui aliqua amet ut.",
         "AddedDate": "2020-09-03",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -541,7 +566,8 @@
         "Url": "https://randomuser.me/api/portraits/men/1.jpg",
         "Description": "Reprehenderit duis ea proident consectetur esse tempor sunt.",
         "AddedDate": "2020-09-02",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -562,7 +588,8 @@
         "Url": "https://randomuser.me/api/portraits/men/56.jpg",
         "Description": "In labore qui mollit elit ut nostrud do velit pariatur labore anim et.",
         "AddedDate": "2020-08-29",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -583,7 +610,8 @@
         "Url": "https://randomuser.me/api/portraits/men/90.jpg",
         "Description": "Mollit ut dolore duis culpa mollit ex.",
         "AddedDate": "2020-08-15",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -604,7 +632,8 @@
         "Url": "https://randomuser.me/api/portraits/men/20.jpg",
         "Description": "Amet officia in sunt sint amet ut enim consectetur qui.",
         "AddedDate": "2020-09-05",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -625,7 +654,8 @@
         "Url": "https://randomuser.me/api/portraits/men/56.jpg",
         "Description": "Ullamco cillum excepteur ullamco ut.",
         "AddedDate": "2020-08-20",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -646,7 +676,8 @@
         "Url": "https://randomuser.me/api/portraits/men/10.jpg",
         "Description": "Id eiusmod velit do eu dolor esse nostrud incididunt ad nulla exercitation ullamco labore enim.",
         "AddedDate": "2020-09-04",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -667,7 +698,8 @@
         "Url": "https://randomuser.me/api/portraits/men/9.jpg",
         "Description": "Aute incididunt fugiat ad esse magna dolore sunt dolor tempor eu.",
         "AddedDate": "2020-08-17",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -688,7 +720,8 @@
         "Url": "https://randomuser.me/api/portraits/men/10.jpg",
         "Description": "Nisi ut incididunt occaecat adipisicing cupidatat eu et veniam ut veniam.",
         "AddedDate": "2020-08-27",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -709,7 +742,8 @@
         "Url": "https://randomuser.me/api/portraits/men/64.jpg",
         "Description": "Minim dolor minim ea dolor veniam laboris officia veniam ut sunt eiusmod ad.",
         "AddedDate": "2020-09-07",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -730,7 +764,8 @@
         "Url": "https://randomuser.me/api/portraits/men/80.jpg",
         "Description": "Nostrud laboris culpa eu minim voluptate dolor laborum.",
         "AddedDate": "2020-08-22",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   },
@@ -751,7 +786,8 @@
         "Url": "https://randomuser.me/api/portraits/men/80.jpg",
         "Description": "Nostrud laboris culpa eu minim voluptate dolor laborum.",
         "AddedDate": "2020-08-22",
-        "IsMain": true
+        "IsMain": true,
+        "IsApproved": true
       }
     ]
   }

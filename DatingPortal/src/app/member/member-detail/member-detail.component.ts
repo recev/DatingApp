@@ -59,8 +59,9 @@ export class MemberDetailComponent implements OnInit {
   selectMessagesTab(){
     this.activatedRoute.queryParamMap.subscribe(params => {
       const tabId = params.get('tabs');
-      console.log(tabId);
-      this.selectTab( parseInt(tabId, 10) );
+      if (tabId){
+        this.selectTab( parseInt(tabId, 10) );
+      }
     });
   }
 

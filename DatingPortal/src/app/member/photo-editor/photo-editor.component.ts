@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class PhotoEditorComponent implements OnInit {
     @Input() photos: Photo[] = [];
+    @Input() unApprovedPhotos: Photo[] = [];
     // Output is used just for demostration perpuse
     @Output() mainPhotoChanged = new EventEmitter<string>();
     public uploader: FileUploader;
@@ -52,7 +53,7 @@ export class PhotoEditorComponent implements OnInit {
       this.uploader.onAfterAddingFile = (file) => file.withCredentials = false;
       this.uploader.onSuccessItem = (item, response, status, Headers) => {
         const photo = JSON.parse(response) as Photo;
-        this.photos.push(photo);
+        this.unApprovedPhotos.push(photo);
         this.authorizationService.addNewPhoto(photo);
       };
     }
@@ -81,6 +82,24 @@ export class PhotoEditorComponent implements OnInit {
           v => {
             const photoIndex = this.photos.findIndex(p => p.id === photo.id);
             this.photos.splice(photoIndex, 1);
+            this.authorizationService.deletePhoto(photo);
+            this.toastr.success('Image deleted successfuly!');
+          },
+          e => this.toastr.error(e)
+        );
+    }
+  }
+
+  deleteUnApprovedPhoto(photo: Photo) {
+
+    const deleteIt = confirm('Do you want to delete the Photo?');
+
+    if (deleteIt === true) {
+      this.photoService.deletePhoto(photo)
+        .subscribe(
+          v => {
+            const photoIndex = this.unApprovedPhotos.findIndex(p => p.id === photo.id);
+            this.unApprovedPhotos.splice(photoIndex, 1);
             this.authorizationService.deletePhoto(photo);
             this.toastr.success('Image deleted successfuly!');
           },

@@ -40,24 +40,53 @@ namespace DatingApi.Data.Repositories
 
         public DetailedUser GetUserDetailsByUserId(string id)
         {
-            DetailedUser user = null;
+            DetailedUser detailedUser = null;
 
             try
             {
-                var dbUser = _context.Users
-                    .Include(user => user.Photos)
-                    .Include(user => user.UserRoles)
-                    .ThenInclude(userRole => userRole.Role)
-                    .FirstOrDefault(user => user.Id == id);
+                // var query = from u in _context.Users
+                // .Where(u => u.Id == id)
+                // select new {
+                //     User = u,
+                //     Photos = u.Photos.Where(p => p.IsApproved == true),
+                //     Roles = u.UserRoles.Select(user => user.Role)
+                // };
 
-                user = _mapper.Map<DetailedUser>(dbUser);
+                var query = _context.Users
+                    .Where(u => u.Id == id)
+                    .Select(u => new {
+                            User = u,
+                            Photos = u.Photos.Where(p => p.IsApproved == true),
+                            UnApprovedPhotos = u.Photos.Where(p => p.IsApproved == false),
+                            Roles = u.UserRoles.Select(user => user.Role)
+                    });
+
+                var userResult = query.FirstOrDefault();
+
+                detailedUser = _mapper.Map<DetailedUser>(userResult.User);
+                detailedUser.Photos = _mapper.Map<IList<PhotoForClient>>(userResult.Photos);
+                detailedUser.UnApprovedPhotos = _mapper.Map<IList<PhotoForClient>>(userResult.UnApprovedPhotos);
+                
+                detailedUser.Roles = userResult.Roles.Select(r => r.Name).ToList();
             }
             catch (System.Exception ex)
             {
                 _logger.LogError(ex.Message);
             }
 
-            return user;
+            return detailedUser;
+        }
+
+        private int GetAge(DateTime dateOfBirth)
+        {
+            var today = DateTime.Today;
+
+            var age = today.Year - dateOfBirth.Year;
+
+            if (dateOfBirth.Date > today.AddYears(-age))
+                age--;
+
+            return age;
         }
 
         public DetailedUser GetUserDetailsByUserName(string username)

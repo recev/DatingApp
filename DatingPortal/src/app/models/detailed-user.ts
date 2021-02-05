@@ -10,5 +10,6 @@ export class DetailedUser extends User{
   lastActive: Date;
   photoUrl: string;
   photos: Photo[];
+  unApprovedPhotos: Photo[];
   roles: string[];
 }
